@@ -24,6 +24,8 @@
   --color-radar-ring: rgba(185, 219, 168, .2);
   --color-radar-sweep: rgba(185, 219, 168, .25);
   --color-radar-ink: #E1E2E6;
+  --color-radar-chip: rgba(50, 53, 56, .9);
+  --color-radar-chip-shadow: rgba(0, 0, 0, .4);
 }
 
 /* Tower in daylight */
@@ -43,6 +45,9 @@
   --color-footer-ink: #4B5563;
   --color-footer-dim: #6B7280;
   --color-footer-signal: #2F6B1F;
+  --color-radar-panel: #E5E7EB;
+  --color-radar-panel-ink: #111827;
+  --color-radar-panel-dim: #4B5563;
 }
 
 /* Radar room (default) */
@@ -62,4 +67,7 @@
   --color-footer-ink: #8D9198;
   --color-footer-dim: #5D6168;
   --color-footer-signal: #B9DBA8;
+  --color-radar-panel: #191C1F;
+  --color-radar-panel-ink: #E1E2E6;
+  --color-radar-panel-dim: #C3C7CE;
 }

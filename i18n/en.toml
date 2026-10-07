@@ -1,7 +1,7 @@
 # Every user-visible string in the theme lives here.
 
 # Header and navigation
-siteKicker = "FLT / STRIP PORTFOLIO"
+siteKicker = "STRIP PORTFOLIO"
 boardTitle = "OPERATIONS BOARD"
 navPrimary = "Primary"
 navBoard = "BOARD"

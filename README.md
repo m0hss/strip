@@ -48,7 +48,7 @@ hugo server
   theme = "dark"                # "dark" (Radar room, default) or "light" (Tower in daylight)
   boardSections = ["projects"]  # sections whose pages become strips on the board
   description = "..."           # meta description fallback
-  # kicker = "FLT / STRIP PORTFOLIO"   # optional: override the header lines
+  # kicker = STRIP PORTFOLIO"   # optional: override the header lines
   # boardTitle = "OPERATIONS BOARD"
   [params.radar]
     enable = true               # radar scope under the board; false hides it

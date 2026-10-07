@@ -2,7 +2,7 @@
 # All projects and logs here are fictional samples from the design.
 baseURL = "https://example.org/"
 languageCode = "en"
-title = "Strip Example"
+title = "Strip"
 
 [module]
   # Work on the theme locally: use the repository root instead of a download.
@@ -14,7 +14,7 @@ title = "Strip Example"
   theme = "dark" # or "light"
   description = "Example portfolio for the Strip Hugo theme."
   [params.handover]
-    officer = "M. Sassi"
+    officer = "Sassi"
 
 [pagination]
   pagerSize = 10

@@ -1,19 +1,32 @@
-# Prestige Hugo Theme
+# Strip Hugo Theme
 
-Prestige is a Hugo theme for case-study portfolios. Each project can present a polished **Performance** layer and a structured **Backstage** account of the work. Standalone failure reports live in the **Trapdoor** section.
+Strip is a Hugo theme for project portfolios, styled as an air-traffic-control **flight progress board**. Each project is a coloured plastic **strip** that sits in a **bay** for its status. Changes of plan stay visible as **amendments**: the old text is struck through and the correction is handwritten beside it in red pen.
 
 ## Project status
 
-This repository is the standalone theme, not a site using the theme. The theme is implemented from the design specification: layouts, components, shortcodes, render hooks, styles, scripts, fonts, the `exampleSite/` demo and the `tools/` scripts.
+This repository is the standalone theme, not a site using the theme. The design exists; the Hugo implementation has not started. Build the layouts, partials, styles, scripts and an `exampleSite/` demo from the design below.
 
-The design source of truth is `prestige_design.md` in `stitch_markdown_prestige_system_designer/`. That folder is kept outside the shipped theme: it is gitignored, so a maintainer keeps it locally, and the last tracked copy is [at commit 4e31e69](https://github.com/m0hss/Prestige/blob/4e31e696a2a006be096ba2612a26f602dae78017/stitch_markdown_prestige_system_designer/prestige_design.md). Never commit it back into the repository. Its content model, templates, visual system, accessibility requirements, and acceptance checklist govern changes. Keep that specification unchanged unless asked to revise the design. Where Hugo forced a different mechanism than the spec describes (stylesheet bundling before Hugo 0.158, SVG sizing, `params.kind`, `:contentbasename` permalinks, site-level `[markup]` and `[taxonomies]`), the code comments and README say so.
+### Design source of truth
+
+`Strip Theme.html` at the repository root is the design, exported from the Claude design canvas "Strip Theme". It is a self-unpacking bundle (about 1.6 MB): open it in a browser with JavaScript enabled to see the artboards. Don't hand-edit it. Re-export it from the canvas when the design changes. It is a reference, not theme code: no layout should load or copy its bundler script. Keep it out of the shipped theme's assets.
+
+The export holds four artboards:
+
+| Artboard | Becomes |
+| --- | --- |
+| Operations Board (desktop, 1440 wide) | the home page / project list |
+| Single project | the single project page |
+| Component sheet | the tokens, strip states, shortcodes, log page, search and 404 |
+| Operations Board (mobile, 390 wide) | the responsive behaviour of the board |
+
+The design governs changes: content model, visual system, microcopy and accessibility. Keep the design unchanged unless asked to revise it. Where Hugo forces a different mechanism than the design shows, say so in a code comment and the README.
 
 ## Hugo requirements and local use
 
-Use Hugo **extended 0.146.0 or later**. From a site that imports this theme:
+Use Hugo **extended 0.146.0 or later** (the new layout system: `layouts/_partials/`, `layouts/_shortcodes/`, `layouts/_markup/`). From a site that imports this theme:
 
 ```toml
-theme = "prestige"
+theme = "strip"
 ```
 
 Then run:
@@ -23,29 +36,43 @@ hugo server -D
 hugo --gc --minify
 ```
 
-The repository's `.claude/launch.json` starts `hugo server -D --source exampleSite` on port 1313 from the repository root. To work on the theme itself, run `cd exampleSite && hugo server`: the repository is the Hugo Module `github.com/m0hss/Prestige`, and `exampleSite/hugo.toml` imports it with a local replacement (`../..`), so no themes folder or symlink is needed. Run `tools/check-budgets.sh` before committing CSS or JS changes (CSS ≤ 51,200 bytes, JS ≤ 30,720 bytes). Run `tools/check-csp.sh` after touching anything in `<head>` or adding markup.
+The repository is the Hugo Module `github.com/m0hss/strip`. To work on the theme itself, give `exampleSite/hugo.toml` a local module replacement (`../..`) and run `cd exampleSite && hugo server`, so no themes folder or symlink is needed.
 
 ## Content vocabulary
 
-- **Performance** is the concise, polished result of a case study.
-- **Backstage** is the numbered account of the problem, constraints, hypotheses, rejected options, implementation, and measured result.
-- **Trapdoor** is a standalone failure report with its own reference, impact or cost, cause, and changed behavior.
-- Case studies are Hugo page bundles under `content/work/<slug>/`. Their `index.md` is Performance; optional `backstage.md` and `steps/*.md` resources hold the process.
-- Trapdoor reports are regular pages under `content/trapdoor/`.
+The ATC metaphor is the theme's language. Use these names in templates, front matter, i18n keys and docs:
 
-See the `issue-to-case-study` and `incident-to-trapdoor` skills in `.claude/skills/` for evidence-based drafting workflows. Keep new drafts marked `draft: true` unless the user explicitly asks otherwise.
+- **Strip**: one project, shown as a card. Its grid shows the **callsign** (e.g. `API-02`), title, date, type label, summary and status.
+- **Bay**: a status column on the board. There are four: `PENDING`, `ACTIVE`, `LANDED`, `DIVERTED`. Status decides the bay; the date only orders strips within a bay. The ACTIVE bay is wider and has an inverted header. An empty bay shows `SECTOR EMPTY`.
+- **Type**: sets the strip colour. `software` → `SFTWR` (blue), `design` → `DESGN` (pink), `writing` → `WRITE` (green), anything else → `MISC` (buff, the default).
+- **Amendment**: a `<del>` of the old text plus an `<ins>` in the handwriting font, red ink on a buff label, rotated slightly (-1°, 1° or 2°), with a date. The latest amendment appears on the strip; the project page has a full **Amendment log**. Both must be announced as deletion and insertion, not just shown.
+- **Logs** (`LOGS` in the nav): short dated notes on a **controller's logpad** (ruled paper, red margin line).
+- **Radar sweep**: the search page (`SWEEP` button, green-on-black input).
+- **Squawk codes**: tags (a 4-digit code plus the tag name).
+- **NOTAM**: the callout shortcode (hazard-striped edge).
+- **RX transcript**: blockquote with a `> RX:` prefix.
+- **Teletype**: code blocks (green on near-black, amber keywords).
+- **Vector left / Vector right**: previous and next pagination.
+- **404**: `SQUAWK 7600` / `RADIO FAILURE / PAGE NOT FOUND` / `RETURN TO BOARD`.
 
-## Implementation notes
+Project pages need front matter for at least `callsign`, `type`, `status`, `date`, `summary` and `amendments` (each with old text, new text and date). Keep new drafts marked `draft: true` unless the user explicitly asks otherwise.
 
-Templates use the Hugo 0.146 layout system (`layouts/_partials/`, `layouts/_shortcodes/`, `layouts/_markup/`). Every user-visible string lives in `i18n/en.toml`. Only `assets/css/tokens.css` may contain colour values. Both modes share one size scale (the Backstage values in `tokens.css`): a mode changes colour, border style, radius and shadow, never a typeface or a size (Backstage uses the Performance type: same families, weights, line heights and tracking). Do not size `:root` by mode, and write font-relative widths in `em`, not `ch`. Content is never put in JavaScript, and nothing is hidden except under `html.js` gating. The site runs under a strict CSP (`layouts/home.headers`): no `style=""` attributes or inline event handlers, and the only inline `<script>`/`<style>` are the two built and hashed in `layouts/_partials/lib/inline-assets.html`. Any new link URL from content or config goes through `lib/url-ok.html`.
+## Visual system
 
-Hugo reserves `kind` as page metadata: a top-level `kind:` in a step file is an error on Hugo 0.150 and deprecated on later releases. Step files therefore write the design spec's step `kind` under `params:` (`params: { kind: problem }`); templates read it as `.Params.kind`.
+- **Themes**: dark ("Radar room") is the default, light is "Tower in daylight". Both are set by `data-theme` and share one set of CSS custom properties: `--color-bg-bay`, `--color-bg-body`, `--color-strip-{buff,blue,pink,green}`, `--color-ink-primary`, `--color-ink-amendment`, `--color-ink-bay`, `--color-plastic-highlight`, `--color-plastic-shadow`. Take the exact values from the component sheet. Keep colour values in one tokens stylesheet; everything else uses the variables. A theme changes colour only, never a typeface or a size.
+- **Type**: IBM Plex Mono for data (callsigns, dates, labels, nav, headings), IBM Plex Sans for body text, and Kalam **only** for amendments. Self-host the fonts in the theme rather than loading Google Fonts.
+- **Details**: 3px double rules under headers, a 9px darkened grip on the strip's left edge, plastic shadow plus a top highlight, a strip lift of 2px on hover, and a faint grain overlay on the board. The header has a live UTC `ZULU` clock.
+- **Accessibility**: focus-visible outline of 3px with 2px offset, touch targets of at least 44px, screen-reader labels for strip fields (`Type:`, `Status:`, `Date:`, `Amended:`), `aria-current="page"` on the active nav tab, and `prefers-reduced-motion` respected. On phones, bays stack and the strip grid scrolls sideways inside its card.
+- **Progressive enhancement**: content never lives in JavaScript. The page must read fully without it; the clock and search are enhancements.
+- Every user-visible string lives in `i18n/en.toml`.
 
-The only repository is `github.com/m0hss/Prestige` (also the module path); every GitHub link points there, and `demosite` in `theme.toml` is the demo's Netlify address, `https://prestige-hugo.netlify.app/` (deployed by `netlify.toml`). The theme author is FixByte Studio. Releases are semver tags (`v0.1.0` onwards) on `master`, as Hugo Modules expect.
+## Repository and releases
+
+The only repository is `github.com/m0hss/strip` (also the module path); every GitHub link points there. The theme author is FixByte Studio. Releases are semver tags (`v0.1.0` onwards) on `master`, as Hugo Modules expect.
 
 ## Safety and accuracy
 
-- Never invent measurements, causes, outcomes, or evidence. Mark unknowns as TODOs in drafts.
-- Do not include secrets, credentials, customer data, private IPs, or internal hostnames in public content.
-- Keep the fictional examples in the design specification clearly identified as examples; they are not facts about a real project.
-- Draft content for review. Do not publish, deploy, or post externally unless explicitly asked.
+- Never invent measurements, outcomes or evidence in content. Mark unknowns as TODOs in drafts.
+- Do not include secrets, credentials, customer data, private IPs or internal hostnames in public content.
+- The projects in the design (`API-02 Core API Rewrite`, `BRD-07 Harbor Brand Refresh` and the rest) are fictional samples. Use them only as clearly marked example content in `exampleSite/`.
+- Draft content for review. Do not publish, deploy or post externally unless explicitly asked.

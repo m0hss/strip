@@ -1223,6 +1223,30 @@ blockquote p { margin: 0 0 8px; }
   .site-footer { border-top: 3px double; }
 }
 
+/*
+ * Print. tokens.css swaps in the daylight palette; this drops the controls
+ * and decoration that mean nothing on paper, unpins the footer and the bay
+ * headers, and keeps the colours that carry meaning (strip types,
+ * amendments, the hazard edge) or whose inverted text would otherwise
+ * print white on white.
+ */
+@media print {
+  .skip-link, .site-nav, .clock, .bay-jump, .swipe-hint, .grain,
+  .radar, .sweep, .vectors, .back { display: none; }
+  body { min-height: auto; }
+  .site-footer { position: static; box-shadow: none; }
+  .bay-header { position: static; }
+  .strip-scroll { overflow: visible; }
+  .strip, .mega { box-shadow: none; }
+  .strip:hover { transform: none; }
+  .strip, .mega, .logpad, .notam, .amendment-log li, .handover { break-inside: avoid; }
+  .strip, .mega, .swatch, ins.amend, .notam::before,
+  .bay--active .bay-header, .tag b {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
 /* The mobile artboard leaves out the strip count and type key. */
 @media (max-width: 767px) {
   .board-key { display: none; }

@@ -43,7 +43,12 @@
   --color-forced-current-ink: HighlightText;
 }
 
-/* Tower in daylight */
+/*
+ * Tower in daylight. Also the print palette: browsers drop backgrounds when
+ * printing, and the radar room's pale ink would vanish on white paper, so
+ * the dark block below is screen-only and print falls back to :root.
+ */
+:root,
 [data-theme="light"] {
   --color-bg-bay: #E5E7EB;
   --color-bg-body: #F3F4F6;
@@ -65,24 +70,36 @@
   --color-radar-panel-dim: #4B5563;
 }
 
-/* Radar room (default) */
-[data-theme="dark"] {
-  --color-bg-bay: #2B2F33;
-  --color-bg-body: #1E2124;
-  --color-strip-buff: #E3D9BA;
-  --color-strip-blue: #9BB8DA;
-  --color-strip-pink: #D9A9B5;
-  --color-strip-green: #AACB99;
-  --color-ink-primary: #1A1A1A;
-  --color-ink-amendment: #A93226;
-  --color-ink-bay: #F9FAFB;
-  --color-plastic-highlight: rgba(255, 255, 255, .2);
-  --color-plastic-shadow: rgba(0, 0, 0, .5);
-  --color-footer-bg: #0B0F11;
-  --color-footer-ink: #8D9198;
-  --color-footer-dim: #5D6168;
-  --color-footer-signal: #B9DBA8;
-  --color-radar-panel: #191C1F;
-  --color-radar-panel-ink: #E1E2E6;
-  --color-radar-panel-dim: #C3C7CE;
+@media not print {
+  /* Radar room (default) */
+  [data-theme="dark"] {
+    --color-bg-bay: #2B2F33;
+    --color-bg-body: #1E2124;
+    --color-strip-buff: #E3D9BA;
+    --color-strip-blue: #9BB8DA;
+    --color-strip-pink: #D9A9B5;
+    --color-strip-green: #AACB99;
+    --color-ink-primary: #1A1A1A;
+    --color-ink-amendment: #A93226;
+    --color-ink-bay: #F9FAFB;
+    --color-plastic-highlight: rgba(255, 255, 255, .2);
+    --color-plastic-shadow: rgba(0, 0, 0, .5);
+    --color-footer-bg: #0B0F11;
+    --color-footer-ink: #8D9198;
+    --color-footer-dim: #5D6168;
+    --color-footer-signal: #B9DBA8;
+    --color-radar-panel: #191C1F;
+    --color-radar-panel-ink: #E1E2E6;
+    --color-radar-panel-dim: #C3C7CE;
+  }
+}
+
+/* Teletype on paper: the near-black panel is not printed, so the ink goes dark. */
+@media print {
+  :root {
+    --color-teletype-bg: transparent;
+    --color-teletype-ink: #1A1A1A;
+    --color-teletype-keyword: #1A1A1A;
+    --color-teletype-border: #333333;
+  }
 }

@@ -34,6 +34,10 @@
   --color-ink-bay: #111827;
   --color-plastic-highlight: rgba(255, 255, 255, .6);
   --color-plastic-shadow: rgba(0, 0, 0, .15);
+  --color-footer-bg: #D1D5DB;
+  --color-footer-ink: #4B5563;
+  --color-footer-dim: #6B7280;
+  --color-footer-signal: #2F6B1F;
 }
 
 /* Radar room (default) */
@@ -49,4 +53,8 @@
   --color-ink-bay: #F9FAFB;
   --color-plastic-highlight: rgba(255, 255, 255, .2);
   --color-plastic-shadow: rgba(0, 0, 0, .5);
+  --color-footer-bg: #0B0F11;
+  --color-footer-ink: #8D9198;
+  --color-footer-dim: #5D6168;
+  --color-footer-signal: #B9DBA8;
 }

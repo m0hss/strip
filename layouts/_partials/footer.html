@@ -1,0 +1,11 @@
+{{- /* Footer from the Stitch home-page design: board status on the left, credit on the right. */}}
+<footer class="site-footer">
+  <p class="footer-status">
+    <span>{{ T "footerSector" }}</span>
+    <span class="footer-signal">{{ T "footerFeed" }}</span>
+    <span class="footer-dim">{{ T "footerQnh" }}</span>
+  </p>
+  <p class="footer-credit">
+    © {{ now.Year }} {{ site.Title }} // {{ T "footerBy" }} <a href="https://studio.fixbyte.be" rel="noopener">{{ T "footerAuthor" }}</a>
+  </p>
+</footer>

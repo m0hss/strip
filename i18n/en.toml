@@ -76,6 +76,13 @@ sweepResults = "{{ .Count }} CONTACTS"
 sweepResultsOne = "1 CONTACT"
 sweepNoContacts = "NO CONTACTS"
 
+# Footer
+footerSector = "TERMINAL SECTOR 04"
+footerFeed = "RADAR FEED: SYNCHRONIZED"
+footerQnh = "QNH 1013 HPA // 29.92 INHG"
+footerBy = "BY"
+footerAuthor = "FIXBYTE"
+
 # 404
 notFoundCode = "SQUAWK 7600"
 notFoundMessage = "RADIO FAILURE / PAGE NOT FOUND"

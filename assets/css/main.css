@@ -319,10 +319,12 @@ body > main { flex: 1 0 auto; }
   box-shadow: 0 6px 10px var(--color-plastic-shadow), inset 0 1px 0 var(--color-plastic-highlight);
 }
 
-.t-software { background: var(--color-strip-blue); }
-.t-design { background: var(--color-strip-pink); }
-.t-writing { background: var(--color-strip-green); }
-.t-misc { background: var(--color-strip-buff); }
+/* --strip-tint is the type colour; the grip reuses it in High Contrast. */
+.t-software { --strip-tint: var(--color-strip-blue); }
+.t-design { --strip-tint: var(--color-strip-pink); }
+.t-writing { --strip-tint: var(--color-strip-green); }
+.t-misc { --strip-tint: var(--color-strip-buff); }
+.t-software, .t-design, .t-writing, .t-misc { background: var(--strip-tint); }
 
 .strip-scroll { display: block; overflow-x: auto; }
 
@@ -1194,6 +1196,31 @@ blockquote p { margin: 0 0 8px; }
   /* The global rule only shortens animations; an infinite loop would flicker. */
   .radar-sweep, .radar-status, .blip--ping .blip-dot::before { animation: none; }
   .blip--ping .blip-dot::before { opacity: 0; }
+}
+
+/*
+ * Windows High Contrast (forced colours). The system palette replaces every
+ * colour, which would erase the strip types, the inverted ACTIVE header and
+ * nav tab, the hazard stripe and the radar. Text keeps the system colours;
+ * these decorative marks keep theirs so the board still reads.
+ */
+@media (forced-colors: active) {
+  .strip::before, .mega::before {
+    forced-color-adjust: none;
+    background: var(--strip-tint);
+  }
+  .swatch,
+  .notam::before,
+  .logpad::before,
+  .radar-scope { forced-color-adjust: none; }
+  .site-nav a[aria-current="page"],
+  .bay--active .bay-header {
+    forced-color-adjust: none;
+    background: var(--color-forced-current);
+    color: var(--color-forced-current-ink);
+  }
+  /* Forced colours drop box shadows, the footer's only edge. */
+  .site-footer { border-top: 3px double; }
 }
 
 /* The mobile artboard leaves out the strip count and type key. */

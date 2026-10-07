@@ -34,6 +34,13 @@
   --color-handover-label: #555555;
   --color-handover-head: #444444;
   --color-handover-del: #666666;
+  /*
+   * Windows High Contrast (forced colours) only: system colours for the
+   * inverted current nav tab and ACTIVE bay header, so they follow the
+   * visitor's contrast theme.
+   */
+  --color-forced-current: Highlight;
+  --color-forced-current-ink: HighlightText;
 }
 
 /* Tower in daylight */

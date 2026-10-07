@@ -48,6 +48,7 @@ The ATC metaphor is the theme's language. Use these names in templates, front ma
 - **Amendment**: a `<del>` of the old text plus an `<ins>` in the handwriting font, red ink on a buff label, rotated slightly (-1°, 1° or 2°), with a date. The latest amendment appears on the strip; the project page has a full **Amendment log**. Both must be announced as deletion and insertion, not just shown.
 - **Logs** (`LOGS` in the nav): short dated notes on a **controller's logpad** (ruled paper, red margin line).
 - **Radar sweep**: the search page (`SWEEP` button, green-on-black input).
+- **Radar scope**: the round scope under the board that plots the ACTIVE strips as contacts (from the Stitch study). Not the same as the radar sweep.
 - **Squawk codes**: tags (a 4-digit code plus the tag name).
 - **NOTAM**: the callout shortcode (hazard-striped edge).
 - **RX transcript**: blockquote with a `> RX:` prefix.

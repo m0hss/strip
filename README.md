@@ -50,6 +50,9 @@ hugo server
   description = "..."           # meta description fallback
   # kicker = "FLT / STRIP PORTFOLIO"   # optional: override the header lines
   # boardTitle = "OPERATIONS BOARD"
+  [params.radar]
+    enable = true               # radar scope under the board; false hides it
+    bays = ["ACTIVE"]           # bays whose strips appear as contacts
 
 [[menus.main]]
   identifier = "board"   # identifiers board, logs, about, sweep pick up i18n labels
@@ -137,6 +140,7 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 - **Clock.** Without JavaScript the header shows `--:--:--` in place of the time.
 - **Phone navigation.** The mobile artboard does not show the primary navigation. The theme keeps it as a full-width row under the title and clock, then shows the design's jump-to-bay bar. The bar highlights no bay, because that would need scroll tracking in JavaScript.
 - **Footer.** The design artboards have no footer. The site footer (status line plus `© YEAR SITE // BY FIXBYTE`, linking to https://studio.fixbyte.be) follows the Stitch home-page study in `stitch_strip_design_generator/`.
+- **Radar scope.** The design artboards have no radar scope. The panel under the board follows the Stitch home-page study. Its contacts are the real strips in the ACTIVE bay (`params.radar.bays`), each linking to its project. Hugo has no layout engine, so a hash of the callsign sets each blip's position: contacts are spread round the scope, and the same content draws the same scope on every build. Stitch's flight levels, range and elevation figures are left out because they would be invented data. The sweep is pure CSS and stops when the visitor prefers reduced motion. The scope repeats the ACTIVE bay, so it is hidden from screen readers and its links are out of the tab order.
 - **Mobile board key.** As in the mobile artboard, the strip count and type key are hidden on phones.
 
 ## Licence

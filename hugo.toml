@@ -9,6 +9,11 @@
   theme = "dark"
   # Sections whose pages are shown as strips on the board.
   boardSections = ["projects"]
+  [params.radar]
+    # Radar scope under the board. Set enable = false to hide it.
+    enable = true
+    # Bays whose strips appear as contacts.
+    bays = ["ACTIVE"]
 
 [outputs]
   home = ["html", "rss"]

@@ -17,6 +17,7 @@
   <p class="swipe-hint">{{ T "swipeHint" }}</p>
   <main class="board" id="main">
     {{- range $bays }}{{ partial "board/bay.html" . }}{{ end }}
+    {{- partial "board/radar.html" (dict "bays" $bays) }}
   </main>
 </div>
 {{- end }}

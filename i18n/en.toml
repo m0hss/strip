@@ -76,6 +76,13 @@ sweepResults = "{{ .Count }} CONTACTS"
 sweepResultsOne = "1 CONTACT"
 sweepNoContacts = "NO CONTACTS"
 
+# Radar scope (home page, under the board)
+radarScopeTitle = "TERMINAL RADAR SCOPE"
+radarScopeSweep = "SWEEP ACTIVE"
+radarScopeContacts = "{{ .Count }} CONTACTS // {{ .Bays }} BAY"
+radarScopeContactsOne = "1 CONTACT // {{ .Bays }} BAY"
+radarScopeEmpty = "NO CONTACTS"
+
 # Footer
 footerSector = "TERMINAL SECTOR 04"
 footerFeed = "RADAR FEED: SYNCHRONIZED"

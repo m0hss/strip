@@ -153,4 +153,4 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 
 ## Licence
 
-TODO: choose a licence before the first release. The bundled fonts keep their own SIL Open Font License (`static/fonts/OFL-*.txt`).
+[MIT](LICENSE), © 2026 FixByte Studio. The bundled fonts keep their own SIL Open Font License 1.1 (`static/fonts/OFL-*.txt`).

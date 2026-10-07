@@ -1,8 +1,8 @@
-{{- /* Returns the most recent amendment (by date) with its index, or nothing. */ -}}
+{{- /* Returns the most recent usable amendment (by date) with its index, or nothing. */ -}}
 {{- $latest := dict }}
-{{- range $i, $a := .Params.amendments }}
-  {{- if or (not $latest.date) (ge (time.AsTime $a.date).Unix (time.AsTime $latest.date).Unix) }}
-    {{- $latest = merge $a (dict "index" $i) }}
+{{- range partial "strip/amendments.html" . }}
+  {{- if or (not $latest.ts) (ge .ts $latest.ts) }}
+    {{- $latest = . }}
   {{- end }}
 {{- end }}
 {{- return $latest }}

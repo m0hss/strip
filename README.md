@@ -109,7 +109,7 @@ draft: true
 ---
 ```
 
-Status decides the bay. The date only orders strips within a bay, newest first. A strip with an unknown status is left off the board, and the build prints a warning. The latest amendment appears on the strip; the project page shows the full **Amendment log**.
+Status decides the bay. The date only orders strips within a bay, newest first. A strip with an unknown status is left off the board, and the build prints a warning. The latest amendment appears on the strip; the project page shows the full **Amendment log**. Each amendment needs `old`, `new` and a `date` (`YYYY-MM-DD`); one that lacks any of them is left out, and the build prints a warning that names the file.
 
 ### Logs
 

@@ -78,10 +78,13 @@ sweepNoContacts = "NO CONTACTS"
 
 # Radar scope (home page, under the board)
 radarScopeTitle = "TERMINAL RADAR SCOPE"
-radarScopeSweep = "SWEEP ACTIVE"
+radarScopeSweep = "SWEEP ACTIVE // 12 RPM"
 radarScopeContacts = "{{ .Count }} CONTACTS // {{ .Bays }} BAY"
 radarScopeContactsOne = "1 CONTACT // {{ .Bays }} BAY"
 radarScopeEmpty = "NO CONTACTS"
+# Scope readouts from the Stitch study: decorative, like the footer QNH.
+radarScopeRange = "RANGE: 35 NM"
+radarScopeElevation = "ELEVATION: 140 FT MSL"
 
 # Footer
 footerSector = "TERMINAL SECTOR 04"

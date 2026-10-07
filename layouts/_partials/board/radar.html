@@ -1,15 +1,24 @@
 {{- /*
-  Terminal radar scope under the board, from the Stitch home-page study
-  (not the design artboards). Contacts are the strips in the bays named by
-  params.radar.bays (ACTIVE by default).
+  Terminal radar scope under the board, copied from the Stitch home-page
+  study (stitch_strip_design_generator/code.html), not the design artboards.
+  It sits in the left third of the row under the bays, where Stitch puts it.
+  Contacts are the strips in the bays named by params.radar.bays (ACTIVE by
+  default).
 
-  Hugo has no layout engine to place blips, so each position is computed
-  here: contacts are spread evenly round the scope in callsign order, and a
-  hash of the callsign adds a little angle jitter and picks the range. The
-  same content gives the same picture on every build, with no JavaScript.
+  Stitch places each target by hand with top/left percentages. Hugo has no
+  layout engine, so each position is computed here instead: contacts are
+  spread evenly round the scope in callsign order, and a hash of the
+  callsign adds a little angle jitter and picks the range. The same content
+  gives the same picture on every build, with no JavaScript. A contact on
+  the right half has its label on the left of the dot so it stays inside
+  the screen.
+
+  Stitch labels each target with an invented flight level (API-02 / FL330);
+  here the label is the callsign and the strip's type label, which are real.
 
   The scope repeats the bay, so it is hidden from assistive technology and
-  its links are out of the tab order; the strips carry the same links.
+  its links are out of the tab order; the strips carry the same links. A
+  visually hidden line gives the contact count instead.
 */ -}}
 {{- $cfg := site.Params.radar | default dict }}
 {{- if ne (index $cfg "enable") false }}
@@ -29,43 +38,45 @@
 <div class="radar-row">
 <section class="radar" aria-labelledby="radar-title">
   <header class="radar-head">
-    <h2 id="radar-title">{{ T "radarScopeTitle" }}</h2>
+    <h2 id="radar-title">
+      <svg class="radar-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13.4 13.4 8.5 15.5 10.6 10.6Z"/></svg>
+      {{- T "radarScopeTitle" -}}
+    </h2>
     <span class="radar-status">{{ T "radarScopeSweep" }}</span>
   </header>
   <div class="radar-scope" aria-hidden="true">
+    <div class="radar-ring radar-ring--outer"></div>
+    <div class="radar-ring radar-ring--middle"></div>
+    <div class="radar-ring radar-ring--inner"></div>
+    <div class="radar-cross radar-cross--h"></div>
+    <div class="radar-cross radar-cross--v"></div>
     <div class="radar-sweep"></div>
-    <svg viewBox="0 0 200 200" focusable="false">
-      <g class="radar-grid">
-        <circle cx="100" cy="100" r="92"/>
-        <circle cx="100" cy="100" r="64"/>
-        <circle cx="100" cy="100" r="36"/>
-        <line x1="0" y1="100" x2="200" y2="100"/>
-        <line x1="100" y1="0" x2="100" y2="200"/>
-      </g>
-      {{- range $i, $p := $contacts }}
-      {{- $call := $p.Params.callsign | default $p.Title }}
-      {{- $h := hash.FNV32a $call }}
-      {{- $angle := add (div (mul 360.0 $i) $n) (sub (mod $h 25) 12) }}
-      {{- $r := add 35 (mod (div $h 25) 46) }}
-      {{- $rad := math.ToRadians $angle }}
-      {{- $x := add 100 (mul $r (math.Sin $rad)) }}
-      {{- $y := sub 100 (mul $r (math.Cos $rad)) }}
-      {{- $type := partial "strip/type.html" $p }}
-      {{- $flip := gt $x 135 }}
-      <a href="{{ $p.RelPermalink }}" tabindex="-1" class="blip {{ $type.class }}">
-        <title>{{ $call }} {{ $p.Title }}</title>
-        <circle cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" $y }}" r="2.5"/>
-        <text x="{{ printf "%.1f" (cond $flip (sub $x 5) (add $x 5)) }}" y="{{ printf "%.1f" (add $y 2.5) }}"{{ if $flip }} text-anchor="end"{{ end }}>{{ $call }}</text>
-      </a>
-      {{- end }}
-      <circle class="radar-tower" cx="100" cy="100" r="3"/>
-      <circle class="radar-tower-core" cx="100" cy="100" r="1.2"/>
-    </svg>
+    {{- range $i, $p := $contacts }}
+    {{- $call := $p.Params.callsign | default $p.Title }}
+    {{- $h := hash.FNV32a $call }}
+    {{- $angle := add (div (mul 360.0 $i) $n) (sub (mod $h 25) 12) }}
+    {{- $r := add 40 (mod (div $h 25) 36) }}{{/* percent of the half-size: 40 to 75 */}}
+    {{- $rad := math.ToRadians $angle }}
+    {{- $x := add 50 (mul (div $r 2.0) (math.Sin $rad)) }}
+    {{- $y := sub 50 (mul (div $r 2.0) (math.Cos $rad)) }}
+    {{- $type := partial "strip/type.html" $p }}
+    {{- $flip := gt $x 58 }}
+    <a href="{{ $p.RelPermalink }}" tabindex="-1" class="blip {{ $type.class }}{{ if $flip }} blip--flip{{ end }}{{ if eq $i 0 }} blip--ping{{ end }}" style="top: {{ printf "%.1f" $y }}%; {{ if $flip }}right: {{ printf "%.1f" (sub 100 $x) }}%{{ else }}left: {{ printf "%.1f" $x }}%{{ end }}">
+      <span class="blip-dot"></span>
+      <span class="blip-label">{{ $call }} / {{ $type.label }}</span>
+    </a>
+    {{- end }}
+    {{- if eq $n 0 }}<span class="radar-empty">{{ T "radarScopeEmpty" }}</span>{{ end }}
+    <span class="radar-tower"></span>
   </div>
-  <p class="radar-foot">
+  <p class="sr">
     {{- if eq $n 0 }}{{ T "radarScopeEmpty" }}
     {{- else if eq $n 1 }}{{ T "radarScopeContactsOne" (dict "Bays" $bayLabel) }}
     {{- else }}{{ T "radarScopeContacts" (dict "Count" $n "Bays" $bayLabel) }}{{ end -}}
+  </p>
+  <p class="radar-foot">
+    <span>{{ T "radarScopeRange" }}</span>
+    <span>{{ T "radarScopeElevation" }}</span>
   </p>
 </section>
 </div>

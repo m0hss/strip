@@ -13,7 +13,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Keep focused and scrolled-to content clear of the pinned footer. */
+  scroll-padding-bottom: 96px;
+}
 
 /*
  * Sticky footer: the body is a column at least one viewport tall and the
@@ -134,16 +138,24 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ---------- Footer ---------- */
+/*
+ * The footer is pinned to the bottom of the viewport however tall the board
+ * is: sticky, so it never covers the end of the page (it still takes its
+ * own place in the flow), and the column body above keeps it at the bottom
+ * of short pages. Screens too short to spare the height let it scroll.
+ */
 .site-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px 24px;
-  margin-top: 48px;
-  padding: 24px;
+  gap: 0 24px;
+  padding: 10px 24px;
   background: var(--color-footer-bg);
-  box-shadow: inset 0 2px 4px var(--color-plastic-shadow);
+  box-shadow: inset 0 2px 4px var(--color-plastic-shadow), 0 -4px 16px var(--color-plastic-shadow);
   color: var(--color-footer-ink);
   font-family: var(--font-mono);
   font-size: .8rem;
@@ -162,9 +174,12 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
 }
 @media (max-width: 767px) {
-  .site-footer { flex-direction: column; text-align: center; }
-  .footer-status { justify-content: center; }
+  .site-footer { flex-direction: column; padding: 8px 16px 0; text-align: center; }
+  .footer-status { justify-content: center; gap: 0 16px; }
   .footer-dim { display: none; }
+}
+@media (max-height: 499px) {
+  .site-footer { position: static; }
 }
 
 /* ---------- Board ---------- */
@@ -815,80 +830,180 @@ blockquote p { margin: 0 0 8px; }
 }
 
 /* ---------- Radar scope (Stitch home-page study) ---------- */
-.radar-row { flex: 0 0 100%; }
+/*
+ * Copied from the Stitch markup: a three-column row under the bays with the
+ * scope panel in the left column (Stitch's logpad column is left empty).
+ * Stitch's "rounded-full" is 0.75rem in its Tailwind config, so the screen
+ * and its rings are rounded rectangles, not circles.
+ */
+.radar-row {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
 
 .radar {
-  max-width: 420px;
-  padding: 0 16px 12px;
-  background: var(--color-bg-bay);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: var(--color-radar-panel);
   border-radius: 4px;
-  color: var(--color-ink-bay);
+  box-shadow: 0 4px 6px -1px var(--color-plastic-shadow);
+  color: var(--color-radar-panel-dim);
   font-family: var(--font-mono);
 }
 .radar-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 4px 16px;
-  margin: 0 -16px 16px;
-  padding: 12px 16px 8px;
-  border-bottom: 3px double var(--color-ink-bay);
+  margin-bottom: 8px;
 }
 .radar-head h2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   margin: 0;
-  font-size: .9rem;
-  letter-spacing: .16em;
+  color: var(--color-radar-panel-ink);
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .05em;
 }
+.radar-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--color-footer-signal);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.radar-icon path { fill: var(--color-footer-signal); stroke: none; }
 .radar-status {
   color: var(--color-footer-signal);
-  font-size: .8rem;
-  letter-spacing: .1em;
+  font-size: 11px;
+  animation: radar-pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
 }
+@keyframes radar-pulse { 50% { opacity: .5; } }
+
 .radar-scope {
   position: relative;
-  width: min(100%, 360px);
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 320px;
   aspect-ratio: 1;
+  margin: 0 auto;
   overflow: hidden;
   background: var(--color-radar-bg);
-  border-radius: 50%;
-  box-shadow: inset 0 2px 8px var(--color-plastic-shadow);
+  border-radius: .75rem;
+  box-shadow: inset 0 2px 4px var(--color-plastic-shadow);
 }
+.radar-ring {
+  position: absolute;
+  border: 1px solid var(--color-radar-ring);
+  border-radius: .75rem;
+}
+.radar-ring--outer { inset: 16px; }
+.radar-ring--middle { inset: 48px; }
+.radar-ring--inner { inset: 96px; }
+.radar-cross { position: absolute; background: var(--color-radar-ring); }
+.radar-cross--h { width: 100%; height: 1px; }
+.radar-cross--v { width: 1px; height: 100%; }
+/* Stitch spins a box the size of the screen, which shows its corners; this one is big enough to cover them. */
 .radar-sweep {
   position: absolute;
-  inset: 0;
+  inset: -50%;
   background: conic-gradient(from 0deg, transparent 0deg 270deg, var(--color-radar-sweep) 360deg);
   animation: radar-spin 5s linear infinite;
 }
 @keyframes radar-spin { to { transform: rotate(360deg); } }
-.radar-scope svg {
+
+.blip {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transform: translateY(-50%);
+  background: none; /* the t-* type classes also paint strips */
+  text-decoration: none;
+  white-space: nowrap;
 }
-.radar-grid { fill: none; stroke: var(--color-radar-ring); stroke-width: .6; }
-.radar-tower { fill: var(--color-radar-ink); }
-.radar-tower-core { fill: var(--color-radar-bg); }
-.blip text {
-  font-family: var(--font-mono);
-  font-size: 7px;
-  letter-spacing: .04em;
-  paint-order: stroke;
-  stroke: var(--color-radar-bg);
-  stroke-width: 2.5px;
+.blip--flip { flex-direction: row-reverse; }
+.blip-dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
 }
-.blip.t-software { fill: var(--color-strip-blue); }
-.blip.t-design { fill: var(--color-strip-pink); }
-.blip.t-writing { fill: var(--color-strip-green); }
-.blip.t-misc { fill: var(--color-strip-buff); }
-.blip:hover text { text-decoration: underline; }
-.radar-foot {
-  margin: 12px 0 0;
+.blip-label {
+  padding: 2px 6px;
+  background: var(--color-radar-chip);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px var(--color-radar-chip-shadow);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  line-height: 1.3;
+}
+.blip:hover .blip-label { text-decoration: underline; }
+.blip--ping .blip-dot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: radar-ping 1s cubic-bezier(0, 0, .2, 1) infinite;
+}
+@keyframes radar-ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+.blip.t-software { color: var(--color-strip-blue); }
+.blip.t-design { color: var(--color-strip-pink); }
+.blip.t-writing { color: var(--color-strip-green); }
+.blip.t-misc { color: var(--color-strip-buff); }
+
+.radar-tower {
+  position: relative;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-radar-ink);
+}
+.radar-tower::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--color-radar-bg);
+}
+.radar-empty {
+  position: absolute;
+  top: 25%;
+  color: var(--color-radar-ink);
   font-size: .8rem;
   letter-spacing: .1em;
-  text-align: center;
+}
+.radar-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  padding-top: 4px;
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .05em;
+}
+/* Below Stitch's lg breakpoint the row is a single column. */
+@media (max-width: 1023px) {
+  .radar-row { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---------- Phones (Operations Board mobile artboard, 390 wide) ---------- */
@@ -952,8 +1067,7 @@ blockquote p { margin: 0 0 8px; }
   .board { flex-direction: column; flex-wrap: nowrap; align-items: stretch; padding: 16px; }
   .bay, .bay--active { flex: none; }
   .bay-header { position: static; }
-  .radar-row { flex: none; }
-  .radar { max-width: none; }
+  .radar-row { flex: none; margin-top: 8px; }
 
   /* The strip grid scrolls sideways inside its card. */
   .strip-grid { grid-template-columns: 62px minmax(max-content, 1fr) 96px; }
@@ -975,8 +1089,9 @@ blockquote p { margin: 0 0 8px; }
     scroll-behavior: auto !important;
   }
   .strip:hover { transform: none; }
-  /* The global rule only shortens animations; an infinite sweep would flicker. */
-  .radar-sweep { animation: none; }
+  /* The global rule only shortens animations; an infinite loop would flicker. */
+  .radar-sweep, .radar-status, .blip--ping .blip-dot::before { animation: none; }
+  .blip--ping .blip-dot::before { opacity: 0; }
 }
 
 /* The mobile artboard leaves out the strip count and type key. */

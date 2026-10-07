@@ -15,9 +15,17 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/*
+ * Sticky footer: the body is a column at least one viewport tall and the
+ * content between header and footer grows, so on short pages (404, about,
+ * an empty search) the footer sits at the bottom of the screen, not mid-page.
+ */
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--color-bg-body);
   color: var(--color-ink-bay);
   font-family: var(--font-sans);
@@ -161,6 +169,8 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Board ---------- */
 .board-wrap { position: relative; }
+body > .board-wrap,
+body > main { flex: 1 0 auto; }
 
 .grain {
   position: absolute;
@@ -394,6 +404,7 @@ ins.amend {
 
 /* ---------- Page shell ---------- */
 .wrap {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px 64px;

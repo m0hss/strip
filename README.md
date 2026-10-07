@@ -53,6 +53,11 @@ hugo server
   [params.radar]
     enable = true               # radar scope under the board; false hides it
     bays = ["ACTIVE"]           # bays whose strips appear as contacts
+  [params.handover]
+    enable = true               # shift handover log beside the radar; false hides it
+    entries = 3                 # latest logs and amendments listed, newest first
+    logSections = ["logs"]      # sections whose pages count as log entries
+    officer = "M. Sassi"        # officer line and signature; both left out when unset
 
 [[menus.main]]
   identifier = "board"   # identifiers board, logs, about, sweep pick up i18n labels
@@ -141,6 +146,7 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 - **Phone navigation.** The mobile artboard does not show the primary navigation. The theme keeps it as a full-width row under the title and clock, then shows the design's jump-to-bay bar. The bar highlights no bay, because that would need scroll tracking in JavaScript.
 - **Footer.** The design artboards have no footer. The site footer (status line plus `© YEAR SITE // BY FIXBYTE`, linking to https://studio.fixbyte.be) follows the Stitch home-page study in `stitch_strip_design_generator/`. It is pinned to the bottom of the viewport (`position: sticky`) however tall the board is, and scrolls normally on screens under 500px tall.
 - **Radar scope.** The design artboards have no radar scope. The panel copies the Stitch home-page study: it sits in the left third of the row under the bays, a rounded-rectangle screen (Stitch's `rounded-full` is 0.75rem) with three inset rings, crosshairs, a conic sweep at 12 RPM, a tower marker and the `RANGE` / `ELEVATION` readouts (decorative strings in `i18n/en.toml`, like the footer's QNH). Its contacts are the real strips in the ACTIVE bay (`params.radar.bays`), each linking to its project. Stitch places each target by hand; Hugo has no layout engine, so a hash of the callsign sets each contact's position, and the same content draws the same scope on every build. Stitch's per-target flight levels would be invented data, so each label shows the callsign and type label instead (`API-02 / SFTWR`). The sweep, ping and pulse are pure CSS and stop when the visitor prefers reduced motion. The scope repeats the ACTIVE bay, so it is hidden from screen readers (a visually hidden line gives the contact count) and its links are out of the tab order.
+- **Shift handover log.** The design artboards have none. The cream notepad beside the radar copies the Stitch study's `WATCH SUPERVISOR // SHIFT HANDOVER LOG`. Stitch's entries are invented, so this one lists real content: the latest logs and strip amendments, newest first (`params.handover.entries`). Hugo content has dates, not times, so entries carry a date where Stitch shows `13:42Z`, and `UTC DATE` is the newest entry's date. The officer line and signature come from `params.handover.officer` and are left out when it is unset. `FREQ: 124.85 MHZ` is a decorative string, like the footer's QNH line. Kalam is kept for amendments, so the signature is set in mono red ink where Stitch hand-writes it.
 - **Mobile board key.** As in the mobile artboard, the strip count and type key are hidden on phones.
 
 ## Licence

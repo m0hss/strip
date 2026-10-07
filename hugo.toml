@@ -14,6 +14,15 @@
     enable = true
     # Bays whose strips appear as contacts.
     bays = ["ACTIVE"]
+  [params.handover]
+    # Shift handover log beside the radar scope. Set enable = false to hide it.
+    enable = true
+    # How many entries (logs and amendments, newest first) it lists.
+    entries = 3
+    # Sections whose pages count as log entries.
+    logSections = ["logs"]
+    # Name in the officer line and signature; both are left out when unset.
+    # officer = ""
 
 [outputs]
   home = ["html", "rss"]

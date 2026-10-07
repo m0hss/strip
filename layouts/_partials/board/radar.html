@@ -1,7 +1,8 @@
 {{- /*
   Terminal radar scope under the board, copied from the Stitch home-page
   study (stitch_strip_design_generator/code.html), not the design artboards.
-  It sits in the left third of the row under the bays, where Stitch puts it.
+  It sits in the left third of the row under the bays (.ops-row in
+  home.html), where Stitch puts it.
   Contacts are the strips in the bays named by params.radar.bays (ACTIVE by
   default).
 
@@ -21,7 +22,7 @@
   visually hidden line gives the contact count instead.
 */ -}}
 {{- $cfg := site.Params.radar | default dict }}
-{{- if ne (index $cfg "enable") false }}
+{{- if ne (string (index $cfg "enable")) "false" }}
 {{- $want := slice }}
 {{- range (index $cfg "bays" | default (slice "ACTIVE")) }}{{ $want = $want | append (upper .) }}{{ end }}
 {{- $contacts := slice }}
@@ -35,7 +36,6 @@
 {{- $contacts = sort $contacts "Params.callsign" }}
 {{- $n := len $contacts }}
 {{- $bayLabel := delimit $labels " / " }}
-<div class="radar-row">
 <section class="radar" aria-labelledby="radar-title">
   <header class="radar-head">
     <h2 id="radar-title">
@@ -79,5 +79,4 @@
     <span>{{ T "radarScopeElevation" }}</span>
   </p>
 </section>
-</div>
 {{- end }}

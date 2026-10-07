@@ -832,11 +832,11 @@ blockquote p { margin: 0 0 8px; }
 /* ---------- Radar scope (Stitch home-page study) ---------- */
 /*
  * Copied from the Stitch markup: a three-column row under the bays with the
- * scope panel in the left column (Stitch's logpad column is left empty).
+ * scope panel in the left column and the shift handover log in the other two.
  * Stitch's "rounded-full" is 0.75rem in its Tailwind config, so the screen
  * and its rings are rounded rectangles, not circles.
  */
-.radar-row {
+.ops-row {
   flex: 0 0 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1003,7 +1003,109 @@ blockquote p { margin: 0 0 8px; }
 }
 /* Below Stitch's lg breakpoint the row is a single column. */
 @media (max-width: 1023px) {
-  .radar-row { grid-template-columns: minmax(0, 1fr); }
+  .ops-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- Shift handover log (Stitch home-page study) ---------- */
+.handover {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: var(--color-handover-paper);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, var(--color-handover-rule) 27px 28px);
+  box-shadow: 0 4px 6px -1px var(--color-plastic-shadow);
+  color: var(--color-handover-ink);
+}
+.handover-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding-bottom: 4px;
+}
+.handover-head h2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  color: var(--color-handover-head);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .1em;
+}
+.handover-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--color-handover-label);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.handover-date {
+  margin: 0;
+  color: var(--color-handover-label);
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+.handover-entries {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .9rem;
+  line-height: 1.625;
+}
+.handover-label {
+  color: var(--color-handover-label);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.handover-entries a { color: var(--color-handover-strong); font-weight: 600; }
+.handover-entries del { color: var(--color-handover-del); }
+/* Stitch writes straight on the paper: no buff label, bold red pen. */
+.handover-entries ins.amend {
+  margin-left: 4px;
+  padding: 0;
+  background: none;
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.handover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding-top: 4px;
+  color: var(--color-handover-label);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.handover-foot p { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; }
+.handover-foot strong { color: var(--color-handover-strong); }
+/* Stitch hand-writes the signature; Kalam is kept for amendments, so it is mono red ink here. */
+.handover-sign {
+  color: var(--color-ink-amendment);
+  font-size: .9rem;
+  font-weight: 700;
+  transform: rotate(-2deg);
+}
+.handover :focus-visible { outline-color: var(--color-handover-ink); }
+@media (max-width: 1023px) {
+  .handover { grid-column: auto; }
 }
 
 /* ---------- Phones (Operations Board mobile artboard, 390 wide) ---------- */
@@ -1067,7 +1169,7 @@ blockquote p { margin: 0 0 8px; }
   .board { flex-direction: column; flex-wrap: nowrap; align-items: stretch; padding: 16px; }
   .bay, .bay--active { flex: none; }
   .bay-header { position: static; }
-  .radar-row { flex: none; margin-top: 8px; }
+  .ops-row { flex: none; margin-top: 8px; }
 
   /* The strip grid scrolls sideways inside its card. */
   .strip-grid { grid-template-columns: 62px minmax(max-content, 1fr) 96px; }

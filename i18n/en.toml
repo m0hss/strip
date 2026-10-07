@@ -86,6 +86,16 @@ radarScopeEmpty = "NO CONTACTS"
 radarScopeRange = "RANGE: 35 NM"
 radarScopeElevation = "ELEVATION: 140 FT MSL"
 
+# Shift handover log (home page, beside the radar scope)
+handoverTitle = "WATCH SUPERVISOR // SHIFT HANDOVER LOG"
+handoverDate = "UTC DATE:"
+handoverEntry = "ENTRY"
+handoverAmended = "amended"
+handoverOfficer = "OFFICER IN CHARGE:"
+# Decorative, like the footer QNH.
+handoverFreq = "FREQ: 124.85 MHZ"
+handoverSigned = "Signed // {{ .Officer }} [AUTHORIZED]"
+
 # Footer
 footerSector = "TERMINAL SECTOR 04"
 footerFeed = "RADAR FEED: SYNCHRONIZED"

@@ -70,6 +70,8 @@ Project pages need front matter for at least `callsign`, `type`, `status`, `date
 
 The only repository is `github.com/m0hss/strip` (also the module path); every GitHub link points there. The theme author is FixByte Studio. Releases are semver tags (`v0.1.0` onwards) on `master`, as Hugo Modules expect.
 
+Pull request descriptions must not include the Claude session link (`https://claude.ai/code/session_...`) or a session ID.
+
 ## Safety and accuracy
 
 - Never invent measurements, outcomes or evidence in content. Mark unknowns as TODOs in drafts.

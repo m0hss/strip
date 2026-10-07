@@ -136,6 +136,7 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 - **Search.** A static site has no server search. The search page renders every strip, and `sweep.js` narrows the list in the browser. Without JavaScript the full list stays visible.
 - **Clock.** Without JavaScript the header shows `--:--:--` in place of the time.
 - **Phone navigation.** The mobile artboard does not show the primary navigation. The theme keeps it as a full-width row under the title and clock, then shows the design's jump-to-bay bar. The bar highlights no bay, because that would need scroll tracking in JavaScript.
+- **Footer.** The design artboards have no footer. The site footer (status line plus `© YEAR SITE // BY FIXBYTE`, linking to https://studio.fixbyte.be) follows the Stitch home-page study in `stitch_strip_design_generator/`.
 - **Mobile board key.** As in the mobile artboard, the strip count and type key are hidden on phones.
 
 ## Licence

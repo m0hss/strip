@@ -49,6 +49,7 @@ The ATC metaphor is the theme's language. Use these names in templates, front ma
 - **Logs** (`LOGS` in the nav): short dated notes on a **controller's logpad** (ruled paper, red margin line).
 - **Radar sweep**: the search page (`SWEEP` button, green-on-black input).
 - **Radar scope**: the round scope under the board that plots the ACTIVE strips as contacts (from the Stitch study). Not the same as the radar sweep.
+- **Handover log**: the cream shift handover notepad beside the radar scope (from the Stitch study). It lists the latest logs and amendments, signed by `params.handover.officer`.
 - **Squawk codes**: tags (a 4-digit code plus the tag name).
 - **NOTAM**: the callout shortcode (hazard-striped edge).
 - **RX transcript**: blockquote with a `> RX:` prefix.

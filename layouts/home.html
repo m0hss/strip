@@ -17,7 +17,15 @@
   <p class="swipe-hint">{{ T "swipeHint" }}</p>
   <main class="board" id="main">
     {{- range $bays }}{{ partial "board/bay.html" . }}{{ end }}
-    {{- partial "board/radar.html" (dict "bays" $bays) }}
+    {{- /* The Stitch row under the bays: radar scope, then the shift handover log. */}}
+    {{- $radar := partial "board/radar.html" (dict "bays" $bays) }}
+    {{- $handover := partial "board/handover.html" . }}
+    {{- if or (strings.TrimSpace $radar) (strings.TrimSpace $handover) }}
+    <div class="ops-row">
+      {{- $radar }}
+      {{- $handover }}
+    </div>
+    {{- end }}
   </main>
 </div>
 {{- end }}

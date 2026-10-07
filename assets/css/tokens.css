@@ -26,6 +26,14 @@
   --color-radar-ink: #E1E2E6;
   --color-radar-chip: rgba(50, 53, 56, .9);
   --color-radar-chip-shadow: rgba(0, 0, 0, .4);
+  /* Shift handover log: cream paper in both themes, from the Stitch study. */
+  --color-handover-paper: #EFEBD9;
+  --color-handover-rule: rgba(0, 0, 0, .06);
+  --color-handover-ink: #222222;
+  --color-handover-strong: #1A1A1A;
+  --color-handover-label: #555555;
+  --color-handover-head: #444444;
+  --color-handover-del: #666666;
 }
 
 /* Tower in daylight */

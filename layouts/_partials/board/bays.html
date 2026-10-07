@@ -1,0 +1,21 @@
+{{- /*
+  Groups strips into the four bays. Status decides the bay; the date only
+  orders strips within a bay (newest first). A strip with an unknown status
+  is left off the board with a build warning.
+*/ -}}
+{{- $strips := . }}
+{{- $bays := slice }}
+{{- $names := slice "PENDING" "ACTIVE" "LANDED" "DIVERTED" }}
+{{- range $strips }}
+  {{- $s := upper (.Params.status | default "") }}
+  {{- if not (in $names $s) }}
+    {{- warnf "strip: %q has status %q; use one of PENDING, ACTIVE, LANDED, DIVERTED" .File.Path .Params.status }}
+  {{- end }}
+{{- end }}
+{{- range $names }}
+  {{- $name := . }}
+  {{- $in := slice }}
+  {{- range $strips }}{{ if eq (upper (.Params.status | default "")) $name }}{{ $in = $in | append . }}{{ end }}{{ end }}
+  {{- $bays = $bays | append (dict "name" $name "id" (lower $name) "strips" (sort $in "Date" "desc")) }}
+{{- end }}
+{{- return $bays }}

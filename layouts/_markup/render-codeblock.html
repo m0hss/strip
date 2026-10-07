@@ -1,0 +1,11 @@
+{{- /*
+  Teletype code blocks. Highlighting always uses CSS classes so main.css can
+  keep every token green and keywords amber, whatever the site's
+  markup.highlight settings are.
+*/ -}}
+{{- $opts := merge .Options (dict "noClasses" false) }}
+{{- if .Type }}
+{{- transform.Highlight .Inner .Type $opts }}
+{{- else }}
+<pre class="teletype"><code>{{ .Inner }}</code></pre>
+{{- end }}

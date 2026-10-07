@@ -1,0 +1,11 @@
+{{- $page := . }}
+<nav class="site-nav" aria-label="{{ T "navPrimary" }}">
+  {{- range site.Menus.main }}
+    {{- $current := or ($page.IsMenuCurrent "main" .) ($page.HasMenuCurrent "main" .) }}
+    {{- with .Page }}{{ if eq . $page }}{{ $current = true }}{{ end }}{{ end }}
+    {{- /* Project pages belong to the board. */}}
+    {{- if and (eq .Identifier "board") (in (site.Params.boardSections | default (slice "projects")) $page.Section) }}{{ $current = true }}{{ end }}
+    {{- $name := .Name }}{{ with .Identifier }}{{ with T (printf "nav%s" (title .)) }}{{ $name = . }}{{ end }}{{ end }}
+    <a href="{{ .URL }}"{{ if $current }} aria-current="page"{{ end }}>{{ $name }}</a>
+  {{- end }}
+</nav>

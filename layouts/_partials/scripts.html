@@ -1,0 +1,5 @@
+{{- $js := slice (resources.Get "js/clock.js") }}
+{{- if eq .Layout "search" }}{{ $js = $js | append (resources.Get "js/sweep.js") }}{{ end }}
+{{- $js = $js | resources.Concat (cond (eq .Layout "search") "js/strip-sweep.js" "js/strip.js") }}
+{{- if hugo.IsProduction }}{{ $js = $js | minify | fingerprint }}{{ end }}
+<script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>

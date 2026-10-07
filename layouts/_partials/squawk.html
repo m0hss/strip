@@ -1,0 +1,3 @@
+{{- /* Squawk codes use the digits 0-7, as transponder codes do. Context: the tag name. */ -}}
+<b>{{ printf "%04o" (mod (hash.FNV32a (lower .)) 4096) }}</b>
+{{- /**/ -}}

@@ -1,0 +1,11 @@
+{{- $label := T (printf "status%s" .name) | default .name }}
+<section class="bay bay--{{ .id }}" id="{{ .id }}" aria-label="{{ T "bayProjects" (dict "Bay" $label) }}">
+  <h2 class="bay-header">{{ $label }} ({{ len .strips }})</h2>
+  <ul class="bay-list">
+    {{- range .strips }}
+    <li>{{ partial "strip.html" . }}</li>
+    {{- else }}
+    <li class="sector-empty">{{ T "bayEmpty" }}</li>
+    {{- end }}
+  </ul>
+</section>

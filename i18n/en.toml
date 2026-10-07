@@ -1,0 +1,85 @@
+# Every user-visible string in the theme lives here.
+
+# Header and navigation
+siteKicker = "FLT / STRIP PORTFOLIO"
+boardTitle = "OPERATIONS BOARD"
+navPrimary = "Primary"
+navBoard = "BOARD"
+navLogs = "LOGS"
+navAbout = "ABOUT"
+navSweep = "RADAR SWEEP"
+skipToContent = "SKIP TO CONTENT"
+clockPrefix = "UTC"
+clockSuffix = "ZULU"
+clockLabel = "Current UTC time"
+
+# Board
+boardSummary = "{{ .Count }} STRIPS / 4 BAYS / SORTED BY STATUS"
+typeKey = "Type key"
+bayJump = "Jump to bay"
+bayProjects = "{{ .Bay }} projects"
+bayEmpty = "SECTOR EMPTY"
+swipeHint = "SWIPE A STRIP SIDEWAYS FOR FULL FIELDS"
+
+# Bays (status)
+statusPENDING = "PENDING"
+statusACTIVE = "ACTIVE"
+statusLANDED = "LANDED"
+statusDIVERTED = "DIVERTED"
+
+# Types
+typeSoftware = "SFTWR"
+typeDesign = "DESGN"
+typeWriting = "WRITE"
+typeMisc = "MISC"
+
+# Screen-reader labels for strip fields
+srType = "Type:"
+srStatus = "Status:"
+srDate = "Date:"
+srAmended = "Amended:"
+srDeleted = "Deleted:"
+srInserted = "Inserted:"
+
+# Single project
+backToBoard = "< BACK TO BOARD"
+fieldCallsign = "CALLSIGN"
+fieldTitle = "TITLE"
+fieldOpened = "OPENED"
+fieldLastAmended = "LAST AMENDED"
+fieldType = "TYPE"
+fieldSummary = "SUMMARY"
+fieldStatus = "STATUS"
+neverAmended = "NONE"
+amendmentLog = "AMENDMENT LOG"
+logOpened = "Opened."
+projectNav = "Project navigation"
+pageNav = "Page navigation"
+vectorLeft = "< VECTOR LEFT"
+vectorRight = "VECTOR RIGHT >"
+squawkCodes = "Squawk codes"
+
+# Logs
+logsTitle = "LOGS"
+logPrefix = "LOG"
+
+# Content components
+rxPrefix = "> RX:"
+notam = "NOTAM"
+
+# Radar sweep (search)
+sweepLabel = "RADAR SWEEP"
+sweepPlaceholder = "callsign or title"
+sweepButton = "SWEEP"
+sweepNoJs = "Every strip is listed below. With JavaScript on, SWEEP narrows the list."
+sweepResults = "{{ .Count }} CONTACTS"
+sweepResultsOne = "1 CONTACT"
+sweepNoContacts = "NO CONTACTS"
+
+# 404
+notFoundCode = "SQUAWK 7600"
+notFoundMessage = "RADIO FAILURE / PAGE NOT FOUND"
+returnToBoard = "RETURN TO BOARD"
+
+# Taxonomies
+tagsTitle = "SQUAWK CODES"

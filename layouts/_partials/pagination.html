@@ -1,0 +1,8 @@
+{{- /* Vector left / Vector right for paginated lists. */ -}}
+{{- $p := .Paginator }}
+{{- if gt $p.TotalPages 1 }}
+<nav class="vectors" aria-label="{{ T "pageNav" }}">
+  {{- with $p.Prev }}<a class="btn" href="{{ .URL }}" rel="prev">{{ T "vectorLeft" }}</a>{{ end }}
+  {{- with $p.Next }}<a class="btn vector-right" href="{{ .URL }}" rel="next">{{ T "vectorRight" }}</a>{{ end }}
+</nav>
+{{- end }}

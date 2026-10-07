@@ -1,0 +1,11 @@
+{{- /*
+  NOTAM callout with a hazard-striped edge.
+  Usage: {{< notam >}}Read-only mode in effect.{{< /notam >}}
+         {{< notam title="NOTAM A0042" >}}...{{< /notam >}}
+*/ -}}
+<aside class="notam">
+  <div class="notam-body">
+    <b class="notam-title">{{ .Get "title" | default (T "notam") }}</b>
+    {{ .Inner | .Page.RenderString (dict "display" "block") }}
+  </div>
+</aside>

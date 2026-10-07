@@ -1,0 +1,8 @@
+{{- /*
+  One amendment: the old text struck through and the new text in red pen.
+  Screen-reader text announces each part as a deletion and an insertion.
+  Params: old, new, class (rotation), note (optional suffix after the new text).
+*/ -}}
+<del><span class="sr">{{ T "srDeleted" }} </span>{{ .old | markdownify }}</del>
+<ins class="amend {{ .class }}"{{ with .datetime }} datetime="{{ . }}"{{ end }}><span class="sr">{{ T "srInserted" }} </span>{{ with .prefix }}{{ . }} {{ end }}{{ .new | markdownify }}{{ with .note }} ({{ . }}){{ end }}</ins>
+{{- /**/ -}}

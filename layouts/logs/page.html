@@ -1,0 +1,18 @@
+{{- define "main" }}
+<main class="wrap" id="main">
+  <a class="back" href="{{ .Parent.RelPermalink }}">&lt; {{ T "logsTitle" }}</a>
+  <article class="logpad logpad--single">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ T "logPrefix" }} {{ .Date.Format "2006-01-02" }}</time>
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+  {{- partial "tags.html" . }}
+  {{- if or .PrevInSection .NextInSection }}
+  <nav class="vectors" aria-label="{{ T "pageNav" }}">
+    {{- /* Logs are listed newest first, so the newer note is to the left. */}}
+    {{- with .NextInSection }}<a class="btn" href="{{ .RelPermalink }}" rel="prev">{{ T "vectorLeft" }}<span class="sr"> {{ .Title }}</span></a>{{ end }}
+    {{- with .PrevInSection }}<a class="btn vector-right" href="{{ .RelPermalink }}" rel="next">{{ T "vectorRight" }}<span class="sr"> {{ .Title }}</span></a>{{ end }}
+  </nav>
+  {{- end }}
+</main>
+{{- end }}

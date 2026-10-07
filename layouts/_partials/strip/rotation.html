@@ -1,0 +1,7 @@
+{{- /* Amendments are rotated -1°, 1° or 2°. An amendment may set `rotate`; otherwise its position picks one. */ -}}
+{{- $classes := dict "-1" "rot-n1" "1" "rot-1" "2" "rot-2" }}
+{{- $a := .amendment }}
+{{- $r := "" }}
+{{- with $a.rotate }}{{ $r = index $classes (string .) }}{{ end }}
+{{- if not $r }}{{ $r = index (slice "rot-n1" "rot-1" "rot-2") (mod (.index | default 0) 3) }}{{ end }}
+{{- return $r }}

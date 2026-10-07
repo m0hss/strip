@@ -1,0 +1,8 @@
+{{- /* Squawk codes: each tag gets a stable 4-digit octal code from its name. */ -}}
+{{- with .GetTerms "tags" }}
+<ul class="tags" aria-label="{{ T "squawkCodes" }}">
+  {{- range . }}
+  <li><a class="tag" href="{{ .RelPermalink }}">{{ partial "squawk.html" .Title }}{{ upper .Title }}</a></li>
+  {{- end }}
+</ul>
+{{- end }}

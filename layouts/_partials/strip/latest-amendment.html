@@ -1,0 +1,8 @@
+{{- /* Returns the most recent amendment (by date) with its index, or nothing. */ -}}
+{{- $latest := dict }}
+{{- range $i, $a := .Params.amendments }}
+  {{- if or (not $latest.date) (ge (time.AsTime $a.date).Unix (time.AsTime $latest.date).Unix) }}
+    {{- $latest = merge $a (dict "index" $i) }}
+  {{- end }}
+{{- end }}
+{{- return $latest }}

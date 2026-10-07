@@ -1,0 +1,19 @@
+{{- /*
+  Vector left / Vector right: the previous and next strip in board order
+  (bay first, then newest first within the bay).
+*/ -}}
+{{- $order := slice }}
+{{- range partial "board/bays.html" (partial "board/strips.html" .) }}{{ range .strips }}{{ $order = $order | append . }}{{ end }}{{ end }}
+{{- $prev := false }}{{ $next := false }}{{ $found := false }}
+{{- range $order }}
+  {{- if $found }}{{ if not $next }}{{ $next = . }}{{ end }}
+  {{- else if eq . $ }}{{ $found = true }}
+  {{- else }}{{ $prev = . }}{{ end }}
+{{- end }}
+{{- if not $found }}{{ $prev = false }}{{ end }}
+{{- if or $prev $next }}
+<nav class="vectors" aria-label="{{ T "projectNav" }}">
+  {{- with $prev }}<a class="btn" href="{{ .RelPermalink }}" rel="prev">{{ T "vectorLeft" }}<span class="sr"> {{ .Params.callsign }} {{ .Title }}</span></a>{{ end }}
+  {{- with $next }}<a class="btn vector-right" href="{{ .RelPermalink }}" rel="next">{{ T "vectorRight" }}<span class="sr"> {{ .Params.callsign }} {{ .Title }}</span></a>{{ end }}
+</nav>
+{{- end }}

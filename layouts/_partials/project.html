@@ -1,0 +1,30 @@
+{{- /* The single project page. Context: the project page. */ -}}
+{{- $t := partial "strip/type.html" . }}
+{{- $status := upper (.Params.status | default "PENDING") }}
+{{- $latest := partial "strip/latest-amendment.html" . }}
+<main class="wrap" id="main">
+  <a class="back" href="{{ "/" | relLangURL }}">{{ T "backToBoard" }}</a>
+  <article>
+    <header class="mega {{ $t.class }}">
+      <dl class="mega-grid">
+        <div><dt>{{ T "fieldCallsign" }}</dt><dd class="v-callsign">{{ .Params.callsign }}</dd></div>
+        <div><dt>{{ T "fieldTitle" }}</dt><dd><h1 class="v-title">{{ .Title }}</h1></dd></div>
+        <div><dt>{{ T "fieldOpened" }}</dt><dd class="v-mono"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></dd></div>
+        <div><dt>{{ T "fieldLastAmended" }}</dt><dd class="v-mono">
+          {{- with $latest.date }}{{ $d := time.AsTime . }}<time datetime="{{ $d.Format "2006-01-02" }}">{{ $d.Format "2006-01-02" }}</time>{{ else }}{{ T "neverAmended" }}{{ end -}}
+        </dd></div>
+        <div><dt>{{ T "fieldType" }}</dt><dd class="v-mono">{{ $t.label }}</dd></div>
+        <div><dt>{{ T "fieldSummary" }}</dt><dd>{{ .Params.summary | default .Summary | plainify }}</dd></div>
+        <div class="mega-wide"><dt>{{ T "fieldStatus" }}</dt><dd class="v-mono">{{ T (printf "status%s" $status) | default $status }}</dd></div>
+      </dl>
+    </header>
+
+    <div class="prose">
+      {{ .Content }}
+    </div>
+
+    {{- partial "amendment-log.html" . }}
+    {{- partial "tags.html" . }}
+    {{- partial "vectors.html" . }}
+  </article>
+</main>

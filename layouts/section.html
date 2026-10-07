@@ -1,0 +1,14 @@
+{{- define "main" }}
+{{- /* A section that is not on the board (e.g. a "notes" folder): its pages as a plain list of strips or links. */}}
+<main class="wrap" id="main">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{- $pager := .Paginate .RegularPages }}
+  <ul class="bay-list page-list">
+    {{- range $pager.Pages }}
+    <li>{{ if .Params.callsign }}{{ partial "strip.html" . }}{{ else }}<a class="btn" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</li>
+    {{- end }}
+  </ul>
+  {{- partial "pagination.html" . }}
+</main>
+{{- end }}

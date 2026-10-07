@@ -1,0 +1,22 @@
+{{- define "main" }}
+{{- $strips := partial "board/strips.html" . }}
+{{- $bays := partial "board/bays.html" $strips }}
+{{- $count := 0 }}{{ range $bays }}{{ $count = add $count (len .strips) }}{{ end }}
+<div class="board-wrap">
+  {{- partial "grain.html" . }}
+  <div class="board-key">
+    <p>{{ T "boardSummary" (dict "Count" $count) }}</p>
+    {{- partial "board/type-key.html" . }}
+  </div>
+  {{- /* Phones: jump to a bay (the mobile artboard's sub-navigation). */}}
+  <nav class="bay-jump" aria-label="{{ T "bayJump" }}">
+    {{- range $bays }}
+    <a href="#{{ .id }}">{{ T (printf "status%s" .name) }}<b>{{ len .strips }}</b></a>
+    {{- end }}
+  </nav>
+  <p class="swipe-hint">{{ T "swipeHint" }}</p>
+  <main class="board" id="main">
+    {{- range $bays }}{{ partial "board/bay.html" . }}{{ end }}
+  </main>
+</div>
+{{- end }}

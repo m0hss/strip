@@ -1,0 +1,6 @@
+{{- /* Returns the type key, colour class and label for a page's `type` front matter. */ -}}
+{{- $key := lower (.Params.type | default "misc") }}
+{{- $known := dict "software" "typeSoftware" "design" "typeDesign" "writing" "typeWriting" }}
+{{- $i18n := index $known $key | default "typeMisc" }}
+{{- if not (index $known $key) }}{{ $key = "misc" }}{{ end }}
+{{- return dict "key" $key "class" (printf "t-%s" $key) "label" (T $i18n) }}

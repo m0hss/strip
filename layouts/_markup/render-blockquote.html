@@ -1,0 +1,16 @@
+{{- /* RX transcript: every blockquote opens with the > RX: prefix. Alerts (> [!NOTE]) become NOTAMs. */ -}}
+{{- if eq .Type "alert" }}
+<aside class="notam">
+  <div class="notam-body">
+    <b class="notam-title">{{ with .AlertTitle }}{{ . }}{{ else }}{{ T "notam" }}{{ end }}</b>
+    {{ .Text }}
+  </div>
+</aside>
+{{- else }}
+<blockquote>
+  {{- $text := .Text | string }}
+  {{- $rx := printf `<span class="rx">%s</span> ` (T "rxPrefix" | htmlEscape) }}
+  {{- if hasPrefix $text "<p>" }}{{ $text = replace $text "<p>" (printf "<p>%s" $rx) 1 }}{{ else }}{{ $text = printf "%s%s" $rx $text }}{{ end }}
+  {{ $text | safeHTML }}
+</blockquote>
+{{- end }}

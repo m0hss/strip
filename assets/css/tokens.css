@@ -1,0 +1,52 @@
+/*
+ * Strip colour tokens. The only stylesheet that holds colour values.
+ * Values come from the "Component sheet" artboard of Strip Theme.html.
+ * A theme changes colour only, never a typeface or a size.
+ */
+
+/* Shared by both themes: teletype, logpad and NOTAM hazard colours. */
+:root {
+  --color-teletype-bg: #0B0E0C;
+  --color-teletype-ink: #7CFF8A;
+  --color-teletype-keyword: #FFB000;
+  --color-teletype-border: #2E3A31;
+  --color-logpad-paper: #FFFFFF;
+  --color-logpad-ink: #1B2A4A;
+  --color-logpad-rule: #A8C0E6;
+  --color-logpad-margin: #D9534F;
+  --color-hazard-yellow: #E0B000;
+  --color-hazard-red: #B3261E;
+  --color-grip-dark: rgba(0, 0, 0, .2);
+  --color-grip-light: rgba(0, 0, 0, .05);
+  --color-grip-edge: rgba(0, 0, 0, .3);
+}
+
+/* Tower in daylight */
+[data-theme="light"] {
+  --color-bg-bay: #E5E7EB;
+  --color-bg-body: #F3F4F6;
+  --color-strip-buff: #F1E7C6;
+  --color-strip-blue: #A9C6E8;
+  --color-strip-pink: #E8B6C2;
+  --color-strip-green: #B9D9A8;
+  --color-ink-primary: #333333;
+  --color-ink-amendment: #C0392B;
+  --color-ink-bay: #111827;
+  --color-plastic-highlight: rgba(255, 255, 255, .6);
+  --color-plastic-shadow: rgba(0, 0, 0, .15);
+}
+
+/* Radar room (default) */
+[data-theme="dark"] {
+  --color-bg-bay: #2B2F33;
+  --color-bg-body: #1E2124;
+  --color-strip-buff: #E3D9BA;
+  --color-strip-blue: #9BB8DA;
+  --color-strip-pink: #D9A9B5;
+  --color-strip-green: #AACB99;
+  --color-ink-primary: #1A1A1A;
+  --color-ink-amendment: #A93226;
+  --color-ink-bay: #F9FAFB;
+  --color-plastic-highlight: rgba(255, 255, 255, .2);
+  --color-plastic-shadow: rgba(0, 0, 0, .5);
+}

@@ -1,0 +1,12 @@
+{{- define "main" }}
+<main class="wrap" id="main">
+  <h1 class="page-title">{{ partial "squawk.html" .Title }} {{ upper .Title }}</h1>
+  {{- $pager := .Paginate .Pages }}
+  <ul class="bay-list page-list">
+    {{- range $pager.Pages }}
+    <li>{{ if .Params.callsign }}{{ partial "strip.html" . }}{{ else }}<a class="btn" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</li>
+    {{- end }}
+  </ul>
+  {{- partial "pagination.html" . }}
+</main>
+{{- end }}

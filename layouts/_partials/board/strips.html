@@ -1,0 +1,3 @@
+{{- /* Returns every project page shown on the board. */ -}}
+{{- $sections := site.Params.boardSections | default (slice "projects") }}
+{{- return where site.RegularPages "Section" "in" $sections }}

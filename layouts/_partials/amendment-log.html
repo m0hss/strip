@@ -1,0 +1,19 @@
+{{- /* The full amendment log, newest first, ending with the date the strip was opened. */ -}}
+<section class="amendment-log" aria-labelledby="amendment-log">
+  <h2 id="amendment-log">{{ T "amendmentLog" }}</h2>
+  <ol>
+    {{- $list := slice }}
+    {{- range $i, $a := .Params.amendments }}{{ $list = $list | append (merge $a (dict "index" $i "ts" (time.AsTime $a.date).Unix)) }}{{ end }}
+    {{- range sort $list "ts" "desc" }}
+      {{- $d := time.AsTime .date }}
+    <li>
+      <time datetime="{{ $d.Format "2006-01-02" }}">{{ $d.Format "2006-01-02" }}</time>
+      <div>{{ partial "amendment.html" (dict "old" .old "new" .new "class" (partial "strip/rotation.html" (dict "amendment" . "index" (add .index 1))) "datetime" ($d.Format "2006-01-02")) }}</div>
+    </li>
+    {{- end }}
+    <li>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <div class="orig">{{ with .Params.opened_note }}{{ . | markdownify }}{{ else }}{{ T "logOpened" }}{{ end }}</div>
+    </li>
+  </ol>
+</section>

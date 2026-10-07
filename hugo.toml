@@ -1,0 +1,26 @@
+# Theme defaults. A site's own config overrides these.
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.146.0"
+
+[params]
+  # "dark" (Radar room, the default) or "light" (Tower in daylight).
+  theme = "dark"
+  # Sections whose pages are shown as strips on the board.
+  boardSections = ["projects"]
+
+[outputs]
+  home = ["html", "rss"]
+
+[markup]
+  [markup.highlight]
+    # Teletype code blocks are coloured by main.css, not inline styles.
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = false
+  [markup.goldmark.extensions]
+    strikethrough = true
+
+[taxonomies]
+  tag = "tags"

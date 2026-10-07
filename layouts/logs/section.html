@@ -1,0 +1,17 @@
+{{- define "main" }}
+<main class="wrap" id="main">
+  <h1 class="page-title">{{ T "logsTitle" }}</h1>
+  {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{- $pager := .Paginate .RegularPages.ByDate.Reverse }}
+  <div class="logpads">
+    {{- range $pager.Pages }}
+    <article class="logpad">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ T "logPrefix" }} {{ .Date.Format "2006-01-02" }}</time>
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      <p>{{ .Summary | plainify | truncate 240 }}</p>
+    </article>
+    {{- end }}
+  </div>
+  {{- partial "pagination.html" . }}
+</main>
+{{- end }}

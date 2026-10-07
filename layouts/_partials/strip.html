@@ -1,0 +1,23 @@
+{{- /* One project as a strip on the board. Context: the project page. */ -}}
+{{- $t := partial "strip/type.html" . }}
+{{- $status := upper (.Params.status | default "PENDING") }}
+<a class="strip {{ $t.class }}" href="{{ .RelPermalink }}">
+  <span class="strip-scroll">
+    <span class="strip-grid">
+      <span class="strip-callsign">{{ .Params.callsign }}</span>
+      <span class="strip-title">{{ .Title }}</span>
+      <span class="strip-type"><span class="sr">{{ T "srType" }}</span> {{ $t.label }}</span>
+      <span class="strip-status"><span class="sr">{{ T "srStatus" }}</span> {{ T (printf "status%s" $status) | default $status }}</span>
+      <span class="strip-summary">{{ .Params.summary | default .Summary | plainify }}</span>
+      <span class="strip-date"><span class="sr">{{ T "srDate" }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></span>
+      {{- with partial "strip/latest-amendment.html" . }}
+      {{- if .date }}
+      {{- $d := time.AsTime .date }}
+      <span class="strip-amendment"><span class="sr">{{ T "srAmended" }}</span>
+        {{- partial "amendment.html" (dict "old" .old "new" .new "class" (partial "strip/rotation.html" (dict "amendment" . "index" 0)) "prefix" "^" "note" ($d | time.Format ":date_medium" | replaceRE `, \d{4}$` "") "datetime" ($d.Format "2006-01-02")) }}
+      </span>
+      {{- end }}
+      {{- end }}
+    </span>
+  </span>
+</a>

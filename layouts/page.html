@@ -1,0 +1,20 @@
+{{- define "main" }}
+{{- /*
+  Project pages are rendered here rather than in layouts/projects/page.html.
+  Hugo reserves the `type` front matter key for layout lookup, and the Strip
+  content model uses `type` for the strip colour (software, design, ...), so
+  Hugo looks for layouts/software/page.html, finds nothing, and falls back to
+  this file. Pages in a board section get the project layout.
+*/}}
+{{- if in (site.Params.boardSections | default (slice "projects")) .Section }}
+  {{- partial "project.html" . }}
+{{- else }}
+<main class="wrap" id="main">
+  <article>
+    <h1 class="page-title">{{ .Title }}</h1>
+    <div class="prose">{{ .Content }}</div>
+    {{- partial "tags.html" . }}
+  </article>
+</main>
+{{- end }}
+{{- end }}

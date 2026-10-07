@@ -1,0 +1,26 @@
+{{- define "main" }}
+{{- /*
+  Radar sweep. Hugo builds a static site, so the search runs in the browser:
+  every strip is rendered into this page and sweep.js narrows the list.
+  Without JavaScript the full list stays visible.
+*/}}
+{{- $strips := partial "board/strips.html" . }}
+<main class="wrap" id="main">
+  <h1 class="page-title">{{ .Title | default (T "sweepLabel") }}</h1>
+  <form class="sweep" action="{{ .RelPermalink }}" method="get" role="search" data-sweep>
+    <div>
+      <label for="sweep-q">{{ T "sweepLabel" }}</label>
+      <input id="sweep-q" name="q" type="search" placeholder="{{ T "sweepPlaceholder" }}" autocomplete="off">
+    </div>
+    <button class="btn" type="submit">{{ T "sweepButton" }}</button>
+  </form>
+  <p class="sweep-status" data-sweep-nojs>{{ T "sweepNoJs" }}</p>
+  <p class="sweep-status" role="status" aria-live="polite" data-sweep-status data-count="{{ T "sweepResults" (dict "Count" "{n}") }}" data-one="{{ T "sweepResultsOne" }}" data-none="{{ T "sweepNoContacts" }}"></p>
+  <ul class="bay-list sweep-results">
+    {{- range sort $strips "Date" "desc" }}
+    {{- $t := partial "strip/type.html" . }}
+    <li data-sweep-item="{{ lower (printf "%s %s %s %s %s" .Params.callsign .Title (.Params.summary | default "") $t.label (.Params.status | default "")) }}">{{ partial "strip.html" . }}</li>
+    {{- end }}
+  </ul>
+</main>
+{{- end }}

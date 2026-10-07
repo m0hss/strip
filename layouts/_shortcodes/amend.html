@@ -1,0 +1,9 @@
+{{- /*
+  An amendment inside body text: old text struck through, the correction in red pen.
+  Usage: {{< amend old="Cutover in November." new="Cutover moved to Q1." date="2026-10-05" rotate="-1" >}}
+  rotate is optional: -1, 1 or 2 (default -1).
+*/ -}}
+{{- $classes := dict "-1" "rot-n1" "1" "rot-1" "2" "rot-2" }}
+{{- $class := index $classes (.Get "rotate" | default "-1") | default "rot-n1" }}
+{{- $datetime := "" }}{{ with .Get "date" }}{{ $datetime = (time.AsTime .).Format "2006-01-02" }}{{ end }}
+{{- partial "amendment.html" (dict "old" (.Get "old") "new" (.Get "new") "class" $class "datetime" $datetime) -}}

@@ -1,0 +1,11 @@
+<header class="site-header">
+  {{- $title := printf `<a href="%s"><small>%s</small>%s</a>` ("/" | relLangURL) (site.Params.kicker | default (T "siteKicker") | htmlEscape) (site.Params.boardTitle | default (T "boardTitle") | htmlEscape) | safeHTML }}
+  {{- /* The board's title is the page heading only on the home page. */}}
+  {{- if .IsHome }}
+  <h1 class="site-title">{{ $title }}</h1>
+  {{- else }}
+  <p class="site-title">{{ $title }}</p>
+  {{- end }}
+  {{- partial "nav.html" . }}
+  <p class="clock" aria-label="{{ T "clockLabel" }}">{{ T "clockPrefix" }} <b><time data-zulu>--:--:--</time></b> {{ T "clockSuffix" }}</p>
+</header>

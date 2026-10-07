@@ -1,0 +1,39 @@
+# Example site for the Strip theme.
+# All projects and logs here are fictional samples from the design.
+baseURL = "https://example.org/"
+languageCode = "en"
+title = "Strip Example"
+
+[module]
+  # Work on the theme locally: use the repository root instead of a download.
+  replacements = "github.com/m0hss/strip -> ../.."
+  [[module.imports]]
+    path = "github.com/m0hss/strip"
+
+[params]
+  theme = "dark" # or "light"
+  description = "Example portfolio for the Strip Hugo theme."
+
+[pagination]
+  pagerSize = 10
+
+[[menus.main]]
+  identifier = "board"
+  name = "BOARD"
+  pageRef = "/"
+  weight = 10
+[[menus.main]]
+  identifier = "logs"
+  name = "LOGS"
+  pageRef = "/logs"
+  weight = 20
+[[menus.main]]
+  identifier = "about"
+  name = "ABOUT"
+  pageRef = "/about"
+  weight = 30
+[[menus.main]]
+  identifier = "sweep"
+  name = "RADAR SWEEP"
+  pageRef = "/search"
+  weight = 40

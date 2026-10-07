@@ -19,6 +19,11 @@
   --color-grip-dark: rgba(0, 0, 0, .2);
   --color-grip-light: rgba(0, 0, 0, .05);
   --color-grip-edge: rgba(0, 0, 0, .3);
+  /* Radar scope: a dark screen in both themes, like the teletype. */
+  --color-radar-bg: #0B0F11;
+  --color-radar-ring: rgba(185, 219, 168, .2);
+  --color-radar-sweep: rgba(185, 219, 168, .25);
+  --color-radar-ink: #E1E2E6;
 }
 
 /* Tower in daylight */

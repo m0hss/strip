@@ -15,9 +15,17 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/*
+ * Sticky footer: the body is a column at least one viewport tall and the
+ * content between header and footer grows, so on short pages (404, about,
+ * an empty search) the footer sits at the bottom of the screen, not mid-page.
+ */
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--color-bg-body);
   color: var(--color-ink-bay);
   font-family: var(--font-sans);
@@ -161,6 +169,8 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Board ---------- */
 .board-wrap { position: relative; }
+body > .board-wrap,
+body > main { flex: 1 0 auto; }
 
 .grain {
   position: absolute;
@@ -394,6 +404,7 @@ ins.amend {
 
 /* ---------- Page shell ---------- */
 .wrap {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px 64px;
@@ -803,6 +814,83 @@ blockquote p { margin: 0 0 8px; }
   letter-spacing: .12em;
 }
 
+/* ---------- Radar scope (Stitch home-page study) ---------- */
+.radar-row { flex: 0 0 100%; }
+
+.radar {
+  max-width: 420px;
+  padding: 0 16px 12px;
+  background: var(--color-bg-bay);
+  border-radius: 4px;
+  color: var(--color-ink-bay);
+  font-family: var(--font-mono);
+}
+.radar-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin: 0 -16px 16px;
+  padding: 12px 16px 8px;
+  border-bottom: 3px double var(--color-ink-bay);
+}
+.radar-head h2 {
+  margin: 0;
+  font-size: .9rem;
+  letter-spacing: .16em;
+}
+.radar-status {
+  color: var(--color-footer-signal);
+  font-size: .8rem;
+  letter-spacing: .1em;
+}
+.radar-scope {
+  position: relative;
+  width: min(100%, 360px);
+  margin: 0 auto;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-radar-bg);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 8px var(--color-plastic-shadow);
+}
+.radar-sweep {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg, transparent 0deg 270deg, var(--color-radar-sweep) 360deg);
+  animation: radar-spin 5s linear infinite;
+}
+@keyframes radar-spin { to { transform: rotate(360deg); } }
+.radar-scope svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.radar-grid { fill: none; stroke: var(--color-radar-ring); stroke-width: .6; }
+.radar-tower { fill: var(--color-radar-ink); }
+.radar-tower-core { fill: var(--color-radar-bg); }
+.blip text {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: .04em;
+  paint-order: stroke;
+  stroke: var(--color-radar-bg);
+  stroke-width: 2.5px;
+}
+.blip.t-software { fill: var(--color-strip-blue); }
+.blip.t-design { fill: var(--color-strip-pink); }
+.blip.t-writing { fill: var(--color-strip-green); }
+.blip.t-misc { fill: var(--color-strip-buff); }
+.blip:hover text { text-decoration: underline; }
+.radar-foot {
+  margin: 12px 0 0;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  text-align: center;
+}
+
 /* ---------- Phones (Operations Board mobile artboard, 390 wide) ---------- */
 @media (max-width: 767px) {
   .site-header {
@@ -864,6 +952,8 @@ blockquote p { margin: 0 0 8px; }
   .board { flex-direction: column; flex-wrap: nowrap; align-items: stretch; padding: 16px; }
   .bay, .bay--active { flex: none; }
   .bay-header { position: static; }
+  .radar-row { flex: none; }
+  .radar { max-width: none; }
 
   /* The strip grid scrolls sideways inside its card. */
   .strip-grid { grid-template-columns: 62px minmax(max-content, 1fr) 96px; }
@@ -885,6 +975,8 @@ blockquote p { margin: 0 0 8px; }
     scroll-behavior: auto !important;
   }
   .strip:hover { transform: none; }
+  /* The global rule only shortens animations; an infinite sweep would flicker. */
+  .radar-sweep { animation: none; }
 }
 
 /* The mobile artboard leaves out the strip count and type key. */

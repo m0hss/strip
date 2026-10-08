@@ -4,6 +4,10 @@ A Hugo theme for project portfolios, styled as an air-traffic-control **flight p
 
 By FixByte Studio. Repository and Hugo Module: [`github.com/m0hss/strip`](https://github.com/m0hss/strip).
 
+![The Strip operations board: four bays of coloured project strips, a radar scope and a shift handover log](https://raw.githubusercontent.com/m0hss/strip/master/images/screenshot.png)
+
+**Live demo:** TODO (the example site on Netlify; the link goes here and in `theme.toml` once the site is connected).
+
 ## Requirements
 
 Hugo **extended 0.146.0 or later**. The theme uses the newer layout system (`layouts/_partials/`, `layouts/_shortcodes/`, `layouts/_markup/`).
@@ -23,7 +27,16 @@ hugo mod init github.com/you/your-site
     path = "github.com/m0hss/strip"
 ```
 
-Or as a classic theme: clone the repository into `themes/strip` and set `theme = "strip"`.
+Or as a classic theme, from your site's root:
+
+```bash
+git submodule add https://github.com/m0hss/strip.git themes/strip
+```
+
+```toml
+# hugo.toml
+theme = "strip"
+```
 
 Then:
 
@@ -31,6 +44,10 @@ Then:
 hugo server -D
 hugo --gc --minify
 ```
+
+To start from the demo, copy `exampleSite/content/` into your site and the `[params]` and `[[menus.main]]` blocks from `exampleSite/hugo.toml` into yours (leave out its `[module]` block, which only points the demo at this repository). Replace the sample projects with your own.
+
+The board only shows pages from `params.boardSections` (`projects` by default). A site without that section still builds: the bays show `SECTOR EMPTY`, and other sections render as plain lists and pages.
 
 ## Try the example site
 
@@ -41,6 +58,8 @@ hugo server
 
 `exampleSite/hugo.toml` replaces the module with the repository root (`../..`), so you don't need a `themes` folder or a symlink. Every project and log in the example site is a fictional sample from the design.
 
+The live demo is this example site, built by Netlify from `netlify.toml` at the repository root on every push to `master`.
+
 ## Configuration
 
 ```toml
@@ -48,7 +67,7 @@ hugo server
   theme = "dark"                # "dark" (Radar room, default) or "light" (Tower in daylight)
   boardSections = ["projects"]  # sections whose pages become strips on the board
   description = "..."           # meta description fallback
-  # kicker = STRIP PORTFOLIO"   # optional: override the header lines
+  # kicker = "STRIP PORTFOLIO"  # optional: override the header lines
   # boardTitle = "OPERATIONS BOARD"
   [params.radar]
     enable = true               # radar scope under the board; false hides it

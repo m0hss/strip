@@ -6,7 +6,7 @@ By FixByte Studio. Repository and Hugo Module: [`github.com/m0hss/strip`](https:
 
 ![The Strip operations board: four bays of coloured project strips, a radar scope and a shift handover log](https://raw.githubusercontent.com/m0hss/strip/master/images/screenshot.png)
 
-**Live demo:** TODO (the example site on Netlify; the link goes here and in `theme.toml` once the site is connected).
+**Live demo:** [strip-hugo.netlify.app](https://strip-hugo.netlify.app/)
 
 ## Requirements
 

@@ -61,6 +61,11 @@ hugo server
   [params.footer]
     credit = true               # the "// BY FIXBYTE" link; false removes it
 
+# Tags only. Hugo builds its default categories taxonomy unless the site
+# declares its own, and a theme cannot switch it off.
+[taxonomies]
+  tag = "tags"
+
 [[menus.main]]
   identifier = "board"   # identifiers board, logs, about, sweep pick up i18n labels
   name = "BOARD"
@@ -119,7 +124,7 @@ Short dated notes in `content/logs/`, shown on a controller's logpad (ruled pape
 
 ### Tags (squawk codes)
 
-Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a real transponder code).
+Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a real transponder code). Only the `tags` taxonomy gets squawk codes: any other taxonomy a site builds, such as Hugo's default `categories`, is listed under its own name without codes.
 
 ## Writing in Markdown
 

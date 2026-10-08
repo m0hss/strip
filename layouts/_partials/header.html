@@ -7,5 +7,6 @@
   <p class="site-title">{{ $title }}</p>
   {{- end }}
   {{- partial "nav.html" . }}
-  <p class="clock" aria-label="{{ T "clockLabel" }}">{{ T "clockPrefix" }} <b><time data-zulu>--:--:--</time></b> {{ T "clockSuffix" }}</p>
+  {{- /* clock.js swaps the placeholder for a <time datetime>; a <time> without one would be invalid. */}}
+  <p class="clock">{{ T "clockPrefix" }} <b><span data-zulu>--:--:--</span></b> {{ T "clockSuffix" }}</p>
 </header>

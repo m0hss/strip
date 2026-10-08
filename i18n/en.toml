@@ -11,7 +11,6 @@ navSweep = "RADAR SWEEP"
 skipToContent = "SKIP TO CONTENT"
 clockPrefix = "UTC"
 clockSuffix = "ZULU"
-clockLabel = "Current UTC time"
 
 # Board
 boardSummary = "{{ .Count }} STRIPS / 4 BAYS / SORTED BY STATUS"

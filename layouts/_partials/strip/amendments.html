@@ -1,0 +1,20 @@
+{{- /*
+  Returns a page's usable amendments, in front matter order. Each one keeps
+  its own fields plus "index" (its position in front matter, for rotation),
+  "date" (parsed to a time) and "ts" (Unix seconds, for sorting).
+  An amendment without old, new or a readable date is left out with a build
+  warning, so one bad entry cannot stop the build.
+*/ -}}
+{{- $list := slice }}
+{{- range $i, $a := .Params.amendments }}
+  {{- $t := false }}
+  {{- if and (reflect.IsMap $a) $a.old $a.new $a.date }}
+    {{- with try (time.AsTime $a.date) }}{{ if not .Err }}{{ $t = .Value }}{{ end }}{{ end }}
+  {{- end }}
+  {{- if $t }}
+    {{- $list = $list | append (merge $a (dict "index" $i "date" $t "ts" $t.Unix)) }}
+  {{- else }}
+    {{- warnf "strip: %q amendment %d needs old, new and a date (YYYY-MM-DD); it is left off the strip, the amendment log and the handover log" $.File.Path (add $i 1) }}
+  {{- end }}
+{{- end }}
+{{- return $list }}

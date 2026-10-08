@@ -109,7 +109,7 @@ draft: true
 ---
 ```
 
-Status decides the bay. The date only orders strips within a bay, newest first. A strip with an unknown status is left off the board, and the build prints a warning. The latest amendment appears on the strip; the project page shows the full **Amendment log**.
+Status decides the bay. The date only orders strips within a bay, newest first. A strip with an unknown status is left off the board, and the build prints a warning. The latest amendment appears on the strip; the project page shows the full **Amendment log**. Each amendment needs `old`, `new` and a `date` (`YYYY-MM-DD`); one that lacks any of them is left out, and the build prints a warning that names the file.
 
 ### Logs
 
@@ -148,7 +148,9 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 - **Radar scope.** The design artboards have no radar scope. The panel copies the Stitch home-page study: it sits in the left third of the row under the bays, a rounded-rectangle screen (Stitch's `rounded-full` is 0.75rem) with three inset rings, crosshairs, a conic sweep at 12 RPM, a tower marker and the `RANGE` / `ELEVATION` readouts (decorative strings in `i18n/en.toml`, like the footer's QNH). Its contacts are the real strips in the ACTIVE bay (`params.radar.bays`), each linking to its project. Stitch places each target by hand; Hugo has no layout engine, so a hash of the callsign sets each contact's position, and the same content draws the same scope on every build. Stitch's per-target flight levels would be invented data, so each label shows the callsign and type label instead (`API-02 / SFTWR`). The sweep, ping and pulse are pure CSS and stop when the visitor prefers reduced motion. The scope repeats the ACTIVE bay, so it is hidden from screen readers (a visually hidden line gives the contact count) and its links are out of the tab order.
 - **Shift handover log.** The design artboards have none. The cream notepad beside the radar copies the Stitch study's `WATCH SUPERVISOR // SHIFT HANDOVER LOG`. Stitch's entries are invented, so this one lists real content: the latest logs and strip amendments, newest first (`params.handover.entries`). Hugo content has dates, not times, so entries carry a date where Stitch shows `13:42Z`, and `UTC DATE` is the newest entry's date. The officer line and signature come from `params.handover.officer` and are left out when it is unset. `FREQ: 124.85 MHZ` is a decorative string, like the footer's QNH line. Kalam is kept for amendments, so the signature is set in mono red ink where Stitch hand-writes it.
 - **Mobile board key.** As in the mobile artboard, the strip count and type key are hidden on phones.
+- **Print.** The design has no print state. Both themes print with the daylight palette, because browsers drop backgrounds and the radar room's pale ink would vanish on white paper. Code blocks print as dark ink. The navigation, clock, jump bar, radar scope, search form and vectors are left out; the footer prints once at the end. Strip colours, amendments, the hazard edge, the ACTIVE bay header and squawk codes keep their colours.
+- **Windows High Contrast.** The design has no forced-colours state. With High Contrast on, text and borders take the visitor's system colours, while the strip grips, the type key swatches, the NOTAM hazard edge, the logpad margin line and the radar scope keep their own colours so the strip types still read. The current nav tab and the ACTIVE bay header use the system highlight colour, and the footer gets a double rule in place of its shadow.
 
 ## Licence
 
-TODO: choose a licence before the first release. The bundled fonts keep their own SIL Open Font License (`static/fonts/OFL-*.txt`).
+[MIT](LICENSE), © 2026 FixByte Studio. The bundled fonts keep their own SIL Open Font License 1.1 (`static/fonts/OFL-*.txt`).

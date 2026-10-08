@@ -5,5 +5,10 @@
 */ -}}
 {{- $classes := dict "-1" "rot-n1" "1" "rot-1" "2" "rot-2" }}
 {{- $class := index $classes (.Get "rotate" | default "-1") | default "rot-n1" }}
-{{- $datetime := "" }}{{ with .Get "date" }}{{ $datetime = (time.AsTime .).Format "2006-01-02" }}{{ end }}
+{{- $datetime := "" }}
+{{- with .Get "date" }}
+  {{- with try (time.AsTime .) }}
+    {{- if .Err }}{{ warnf "amend: %q has an unreadable date %q; use YYYY-MM-DD" $.Page.File.Path ($.Get "date") }}{{ else }}{{ $datetime = .Value.Format "2006-01-02" }}{{ end }}
+  {{- end }}
+{{- end }}
 {{- partial "amendment.html" (dict "old" (.Get "old") "new" (.Get "new") "class" $class "datetime" $datetime) -}}

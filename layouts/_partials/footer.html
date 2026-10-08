@@ -1,4 +1,5 @@
 {{- /* Footer from the Stitch home-page design: board status on the left, credit on the right. */}}
+{{- $cfg := site.Params.footer | default dict }}
 <footer class="site-footer">
   <p class="footer-status">
     <span>{{ T "footerSector" }}</span>
@@ -6,6 +7,8 @@
     <span class="footer-dim">{{ T "footerQnh" }}</span>
   </p>
   <p class="footer-credit">
-    © {{ now.Year }} {{ site.Title }} // {{ T "footerBy" }} <a href="https://studio.fixbyte.be" rel="noopener">{{ T "footerAuthor" }}</a>
+    © {{ now.Year }} {{ site.Title }}
+    {{- /* params.footer.credit = false removes the theme credit. */}}
+    {{- if ne (string (index $cfg "credit")) "false" }} // {{ T "footerBy" }} <a href="https://studio.fixbyte.be" rel="noopener">{{ T "footerAuthor" }}</a>{{ end }}
   </p>
 </footer>

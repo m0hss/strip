@@ -23,6 +23,9 @@
     logSections = ["logs"]
     # Name in the officer line and signature; both are left out when unset.
     # officer = ""
+  [params.footer]
+    # The "// BY FIXBYTE" link in the footer. Set credit = false to remove it.
+    credit = true
 
 [outputs]
   home = ["html", "rss"]
@@ -36,5 +39,7 @@
   [markup.goldmark.extensions]
     strikethrough = true
 
+# A theme cannot switch off Hugo's default categories taxonomy; a site that
+# wants tags only declares [taxonomies] itself (see the README).
 [taxonomies]
   tag = "tags"

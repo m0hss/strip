@@ -4,7 +4,7 @@ Strip is a Hugo theme for project portfolios, styled as an air-traffic-control *
 
 ## Project status
 
-This repository is the standalone theme, not a site using the theme. The design exists; the Hugo implementation has not started. Build the layouts, partials, styles, scripts and an `exampleSite/` demo from the design below.
+This repository is the standalone theme, not a site using the theme. The theme is implemented (layouts, partials, styles, scripts, self-hosted fonts and an `exampleSite/` demo) and is being prepared for the official Hugo themes catalogue (see **Hugo themes catalogue** below). Changes refine it against the design below.
 
 ### Design source of truth
 
@@ -70,7 +70,21 @@ Project pages need front matter for at least `callsign`, `type`, `status`, `date
 
 ## Repository and releases
 
-The only repository is `github.com/m0hss/strip` (also the module path); every GitHub link points there. The theme author is FixByte Studio. Releases are semver tags (`v0.1.0` onwards) on `master`, as Hugo Modules expect.
+The only repository is `github.com/m0hss/strip` (also the module path); every GitHub link points there. The theme author is FixByte Studio. Releases are semver tags (`v0.1.0` onwards) on `master`, as Hugo Modules expect. Never delete or move a published tag: the catalogue and every site using the module fetch by tag.
+
+## Hugo themes catalogue
+
+The theme is meant to be listed on themes.gohugo.io, which `gohugoio/hugoThemesSiteBuilder` builds daily (00:00 UTC) from the module path `github.com/m0hss/strip` in its `themes.txt`. The builder fetches the theme as a Go module and reads the files below **from the latest semver tag** (the latest commit only while no tag exists). A change to any of them reaches the catalogue only after a new tag on `master`.
+
+- **`theme.toml`** (TOML only, repository root): `name`, `license`, `licenselink`, `description`, `homepage`, `demosite`, `tags`, `features`, `[author]`. Don't add `min_version`; the supported versions live only in `hugo.toml` under `[module.hugoVersion]` (`extended = true`, `min = "0.146.0"`).
+- **`images/screenshot.png`** (1500×1000) and **`images/tn.png`** (900×600): both exactly 3:2, the desktop Operations Board from `exampleSite/` in the default dark theme, with no browser or device frame. Retake both when the board's look changes: build `exampleSite`, then capture the home page with Playwright at a 1500×1000 viewport (device scale 1 for the screenshot, 0.6 for the thumbnail, so both show the same desktop layout) with reduced motion on.
+- **`README.md`**: shown on the catalogue page as well as GitHub. Images use absolute `https://raw.githubusercontent.com/m0hss/strip/master/...` URLs, because relative paths break on the catalogue. No marketing for other products.
+- **Demo**: the catalogue hosts no demos; it links to `demosite`. The demo is `exampleSite/`, built by Netlify from `netlify.toml` at the repository root (no `base`, so theme changes at the root trigger a build). Keep `HUGO_VERSION` there on a current release, and keep the example site building without warnings on both that version and the `min` version.
+- **Works on any site**: catalogue visitors try the theme on their own content. A site with no `projects`, `logs` or search page, no menu and no params must build without errors or warnings, and the theme must work under a sub-path `baseURL` (link to the home page with `site.Home.RelPermalink`, never `"/" | relURL`).
+- **Upkeep**: the catalogue drops themes with no update for 18 months.
+- **Listing**: a pull request to `gohugoio/hugoThemesSiteBuilder` adds `github.com/m0hss/strip` to `themes.txt` in lexicographic order; its Netlify deploy preview must pass. That pull request is outward-facing: the user opens it, or asks for it explicitly.
+
+Release checklist: `demosite` set → example site builds clean on both Hugo versions → images current → merge to `master` → tag the next semver version on `master` and push the tag.
 
 Pull request descriptions must not include the Claude session link (`https://claude.ai/code/session_...`) or a session ID.
 

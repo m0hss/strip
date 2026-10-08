@@ -1,5 +1,5 @@
 <header class="site-header">
-  {{- $title := printf `<a href="%s"><small>%s</small>%s</a>` ("/" | relLangURL) (site.Params.kicker | default (T "siteKicker") | htmlEscape) (site.Params.boardTitle | default (T "boardTitle") | htmlEscape) | safeHTML }}
+  {{- $title := printf `<a href="%s"><small>%s</small>%s</a>` site.Home.RelPermalink (site.Params.kicker | default (T "siteKicker") | htmlEscape) (site.Params.boardTitle | default (T "boardTitle") | htmlEscape) | safeHTML }}
   {{- /* The board's title is the page heading only on the home page. */}}
   {{- if .IsHome }}
   <h1 class="site-title">{{ $title }}</h1>

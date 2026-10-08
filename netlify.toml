@@ -1,0 +1,20 @@
+# Builds exampleSite/ as the live demo linked from theme.toml's demosite.
+# The build runs from the repository root (no `base`), because Netlify skips a
+# build when nothing changed inside the base directory, and most changes land
+# in the theme at the root. exampleSite/hugo.toml replaces the module with ../..
+# so the demo always shows the theme from the same commit.
+
+[build]
+  publish = "exampleSite/public"
+  command = "cd exampleSite && hugo --gc --minify --baseURL \"${URL}/\""
+
+[build.environment]
+  # Netlify installs Hugo extended for this version.
+  HUGO_VERSION = "0.167.0"
+  HUGO_ENV = "production"
+
+[context.deploy-preview]
+  command = "cd exampleSite && hugo --gc --minify --baseURL \"${DEPLOY_PRIME_URL}/\""
+
+[context.branch-deploy]
+  command = "cd exampleSite && hugo --gc --minify --baseURL \"${DEPLOY_PRIME_URL}/\""

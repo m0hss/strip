@@ -1,19 +1,29 @@
-{{- /* One project as a strip on the board. Context: the project page. */ -}}
+{{- /*
+  One project as a strip on the board. Context: the project page.
+  The whole strip is one link, so it is named by callsign and title only
+  (aria-labelledby). The other fields are its description (aria-describedby),
+  so the links list stays short. Ids are unique per page: each strip is drawn
+  once in any list.
+*/ -}}
 {{- $t := partial "strip/type.html" . }}
-{{- $status := upper (.Params.status | default "PENDING") }}
-<a class="strip {{ $t.class }}" href="{{ .RelPermalink }}">
+{{- $status := partial "strip/status.html" . }}
+{{- $id := printf "strip-%d" (hash.FNV32a .Path) }}
+{{- $latest := partial "strip/latest-amendment.html" . }}
+{{- $described := slice "type" "status" "summary" "date" }}
+{{- if $latest.date }}{{ $described = $described | append "amend" }}{{ end }}
+<a class="strip {{ $t.class }}" href="{{ .RelPermalink }}" aria-labelledby="{{ $id }}-call {{ $id }}-title" aria-describedby="{{ range $i, $f := $described }}{{ if $i }} {{ end }}{{ $id }}-{{ $f }}{{ end }}">
   <span class="strip-scroll">
     <span class="strip-grid">
-      <span class="strip-callsign">{{ .Params.callsign }}</span>
-      <span class="strip-title">{{ .Title }}</span>
-      <span class="strip-type"><span class="sr">{{ T "srType" }}</span> {{ $t.label }}</span>
-      <span class="strip-status"><span class="sr">{{ T "srStatus" }}</span> {{ T (printf "status%s" $status) | default $status }}</span>
-      <span class="strip-summary">{{ .Params.summary | default .Summary | plainify }}</span>
-      <span class="strip-date"><span class="sr">{{ T "srDate" }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></span>
-      {{- with partial "strip/latest-amendment.html" . }}
+      <span class="strip-callsign" id="{{ $id }}-call">{{ .Params.callsign }}</span>
+      <span class="strip-title" id="{{ $id }}-title">{{ .Title }}</span>
+      <span class="strip-type" id="{{ $id }}-type"><span class="sr">{{ T "srType" }}</span> {{ $t.label }}</span>
+      <span class="strip-status" id="{{ $id }}-status"><span class="sr">{{ T "srStatus" }}</span> {{ T (printf "status%s" $status) | default $status }}</span>
+      <span class="strip-summary" id="{{ $id }}-summary">{{ .Params.summary | default .Summary | plainify }}</span>
+      <span class="strip-date" id="{{ $id }}-date"><span class="sr">{{ T "srDate" }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></span>
+      {{- with $latest }}
       {{- if .date }}
       {{- $d := time.AsTime .date }}
-      <span class="strip-amendment"><span class="sr">{{ T "srAmended" }}</span>
+      <span class="strip-amendment" id="{{ $id }}-amend"><span class="sr">{{ T "srAmended" }}</span>
         {{- partial "amendment.html" (dict "old" .old "new" .new "class" (partial "strip/rotation.html" (dict "amendment" . "index" 0)) "prefix" "^" "note" ($d | time.Format ":date_medium" | replaceRE `, \d{4}$` "") "datetime" ($d.Format "2006-01-02")) }}
       </span>
       {{- end }}

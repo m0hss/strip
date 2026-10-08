@@ -2,7 +2,6 @@
 
 A Hugo theme for project portfolios, styled as an air-traffic-control **flight progress board**. Each project is a coloured plastic **strip** in a **bay** for its status. When a plan changes, the old text stays visible, struck through, with the correction handwritten beside it in red pen: an **amendment**.
 
-By FixByte Studio. Repository and Hugo Module: [`github.com/m0hss/strip`](https://github.com/m0hss/strip).
 
 ![The Strip operations board: four bays of coloured project strips, a radar scope and a shift handover log](https://raw.githubusercontent.com/m0hss/strip/master/images/screenshot.png)
 

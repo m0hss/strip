@@ -1,9 +1,18 @@
 {{- define "main" }}
+{{- /*
+  Tags are squawk codes. Any other taxonomy a site builds (Hugo builds
+  categories unless the site declares its own [taxonomies]) is listed under
+  its own name, without codes. Counts leave out strips with an unknown status.
+*/}}
+{{- $squawk := eq .Data.Plural "tags" }}
 <main class="wrap" id="main">
-  <h1 class="page-title">{{ T "tagsTitle" }}</h1>
+  <h1 class="page-title">{{ if $squawk }}{{ T "tagsTitle" }}{{ else }}{{ upper .Title }}{{ end }}</h1>
   <ul class="tags">
     {{- range .Pages.ByTitle }}
-    <li><a class="tag" href="{{ .RelPermalink }}">{{ partial "squawk.html" .Title }}{{ upper .Title }} ({{ len .Pages }})</a></li>
+    {{- $n := len (partial "strip/listable.html" .Pages) }}
+    {{- if $n }}
+    <li><a class="tag" href="{{ .RelPermalink }}">{{ if $squawk }}{{ partial "squawk.html" .Title }}{{ end }}{{ upper .Title }} ({{ $n }})</a></li>
+    {{- end }}
     {{- end }}
   </ul>
 </main>

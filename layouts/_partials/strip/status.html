@@ -1,0 +1,4 @@
+{{- /* Returns a page's status upper-cased if it names one of the four bays, else "". */ -}}
+{{- $s := upper (.Params.status | default "") }}
+{{- if not (in (slice "PENDING" "ACTIVE" "LANDED" "DIVERTED") $s) }}{{ $s = "" }}{{ end }}
+{{- return $s }}

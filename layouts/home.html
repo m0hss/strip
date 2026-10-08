@@ -1,5 +1,5 @@
 {{- define "main" }}
-{{- $strips := partial "board/strips.html" . }}
+{{- $strips := partialCached "board/strips.html" . "strips" }}
 {{- $bays := partial "board/bays.html" $strips }}
 {{- $count := 0 }}{{ range $bays }}{{ $count = add $count (len .strips) }}{{ end }}
 <div class="board-wrap">

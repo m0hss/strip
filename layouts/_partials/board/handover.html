@@ -22,7 +22,7 @@
 {{- range where site.RegularPages "Section" "in" $logSections }}
   {{- $items = $items | append (dict "kind" "log" "page" . "date" .Date "ts" .Date.Unix) }}
 {{- end }}
-{{- range partial "board/strips.html" . }}
+{{- range partialCached "board/strips.html" . "strips" }}
   {{- $p := . }}
   {{- range partial "strip/amendments.html" . }}
     {{- $items = $items | append (dict "kind" "amend" "page" $p "a" . "index" .index "date" .date "ts" .ts) }}

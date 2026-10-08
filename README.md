@@ -58,6 +58,13 @@ hugo server
     entries = 3                 # latest logs and amendments listed, newest first
     logSections = ["logs"]      # sections whose pages count as log entries
     officer = "M. Sassi"        # officer line and signature; both left out when unset
+  [params.footer]
+    credit = true               # the "// BY FIXBYTE" link; false removes it
+
+# Tags only. Hugo builds its default categories taxonomy unless the site
+# declares its own, and a theme cannot switch it off.
+[taxonomies]
+  tag = "tags"
 
 [[menus.main]]
   identifier = "board"   # identifiers board, logs, about, sweep pick up i18n labels
@@ -109,7 +116,7 @@ draft: true
 ---
 ```
 
-Status decides the bay. The date only orders strips within a bay, newest first. A strip with an unknown status is left off the board, and the build prints a warning. The latest amendment appears on the strip; the project page shows the full **Amendment log**. Each amendment needs `old`, `new` and a `date` (`YYYY-MM-DD`); one that lacks any of them is left out, and the build prints a warning that names the file.
+Status decides the bay. The date only orders strips within a bay, newest first. A strip with a missing or unknown status is left off every strip list (board, radar scope, handover log, vectors, search, section and tag pages), and the build prints one warning that names the file. The latest amendment appears on the strip; the project page shows the full **Amendment log**. Each amendment needs `old`, `new` and a `date` (`YYYY-MM-DD`); one that lacks any of them is left out, and the build prints a warning that names the file.
 
 ### Logs
 
@@ -117,7 +124,7 @@ Short dated notes in `content/logs/`, shown on a controller's logpad (ruled pape
 
 ### Tags (squawk codes)
 
-Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a real transponder code).
+Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a real transponder code). Only the `tags` taxonomy gets squawk codes: any other taxonomy a site builds, such as Hugo's default `categories`, is listed under its own name without codes.
 
 ## Writing in Markdown
 
@@ -142,9 +149,10 @@ Each tag gets a stable 4-digit code made from its name (digits 0 to 7, like a re
 
 - **Project layout lookup.** Hugo reserves the `type` front matter key for picking layouts, and the content model uses `type` for strip colour. So project pages are rendered by `layouts/page.html`, which switches to the project layout for pages in a `boardSections` section, not by `layouts/projects/page.html`. Avoid a `type` value that matches a layout folder of your own.
 - **Search.** A static site has no server search. The search page renders every strip, and `sweep.js` narrows the list in the browser. Without JavaScript the full list stays visible.
-- **Clock.** Without JavaScript the header shows `--:--:--` in place of the time.
+- **Clock.** Without JavaScript the header shows `--:--:--` in place of the time. The placeholder is plain text; the script replaces it with a `<time datetime>` and ticks just after each whole second, so the clock neither drifts nor skips.
+- **Strip links.** Each strip is one link, as in the design. Its accessible name is the callsign and title (`aria-labelledby`); type, status, summary, date and latest amendment are its description (`aria-describedby`). Screen readers' links lists stay short, and the fields are still read after the name.
 - **Phone navigation.** The mobile artboard does not show the primary navigation. The theme keeps it as a full-width row under the title and clock, then shows the design's jump-to-bay bar. The bar highlights no bay, because that would need scroll tracking in JavaScript.
-- **Footer.** The design artboards have no footer. The site footer (status line plus `© YEAR SITE // BY FIXBYTE`, linking to https://studio.fixbyte.be) follows the Stitch home-page study in `stitch_strip_design_generator/`. It is pinned to the bottom of the viewport (`position: sticky`) however tall the board is, and scrolls normally on screens under 500px tall.
+- **Footer.** The design artboards have no footer. The site footer (status line plus `© YEAR SITE // BY FIXBYTE`, linking to https://studio.fixbyte.be; `params.footer.credit = false` removes the credit) follows the Stitch home-page study in `stitch_strip_design_generator/`. It is pinned to the bottom of the viewport (`position: sticky`) however tall the board is, and scrolls normally on screens under 500px tall.
 - **Radar scope.** The design artboards have no radar scope. The panel copies the Stitch home-page study: it sits in the left third of the row under the bays, a rounded-rectangle screen (Stitch's `rounded-full` is 0.75rem) with three inset rings, crosshairs, a conic sweep at 12 RPM, a tower marker and the `RANGE` / `ELEVATION` readouts (decorative strings in `i18n/en.toml`, like the footer's QNH). Its contacts are the real strips in the ACTIVE bay (`params.radar.bays`), each linking to its project. Stitch places each target by hand; Hugo has no layout engine, so a hash of the callsign sets each contact's position, and the same content draws the same scope on every build. Stitch's per-target flight levels would be invented data, so each label shows the callsign and type label instead (`API-02 / SFTWR`). The sweep, ping and pulse are pure CSS and stop when the visitor prefers reduced motion. The scope repeats the ACTIVE bay, so it is hidden from screen readers (a visually hidden line gives the contact count) and its links are out of the tab order.
 - **Shift handover log.** The design artboards have none. The cream notepad beside the radar copies the Stitch study's `WATCH SUPERVISOR // SHIFT HANDOVER LOG`. Stitch's entries are invented, so this one lists real content: the latest logs and strip amendments, newest first (`params.handover.entries`). Hugo content has dates, not times, so entries carry a date where Stitch shows `13:42Z`, and `UTC DATE` is the newest entry's date. The officer line and signature come from `params.handover.officer` and are left out when it is unset. `FREQ: 124.85 MHZ` is a decorative string, like the footer's QNH line. Kalam is kept for amendments, so the signature is set in mono red ink where Stitch hand-writes it.
 - **Mobile board key.** As in the mobile artboard, the strip count and type key are hidden on phones.

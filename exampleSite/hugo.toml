@@ -16,6 +16,10 @@ title = "Strip"
   [params.handover]
     officer = "Sassi"
 
+# Tags only. Without this, Hugo also builds its default categories taxonomy.
+[taxonomies]
+  tag = "tags"
+
 [pagination]
   pagerSize = 10
 

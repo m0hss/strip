@@ -4,7 +4,7 @@
   every strip is rendered into this page and sweep.js narrows the list.
   Without JavaScript the full list stays visible.
 */}}
-{{- $strips := partial "board/strips.html" . }}
+{{- $strips := partialCached "board/strips.html" . "strips" }}
 <main class="wrap" id="main">
   <h1 class="page-title">{{ .Title | default (T "sweepLabel") }}</h1>
   <form class="sweep" action="{{ .RelPermalink }}" method="get" role="search" data-sweep>
@@ -19,7 +19,7 @@
   <ul class="bay-list sweep-results">
     {{- range sort $strips "Date" "desc" }}
     {{- $t := partial "strip/type.html" . }}
-    <li data-sweep-item="{{ lower (printf "%s %s %s %s %s" .Params.callsign .Title (.Params.summary | default "") $t.label (.Params.status | default "")) }}">{{ partial "strip.html" . }}</li>
+    <li data-sweep-item="{{ lower (printf "%s %s %s %s %s" .Params.callsign .Title (.Params.summary | default "") $t.label (partial "strip/status.html" .)) }}">{{ partial "strip.html" . }}</li>
     {{- end }}
   </ul>
 </main>

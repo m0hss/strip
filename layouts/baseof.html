@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="{{ site.Language.LanguageCode | default "en" }}" data-theme="{{ site.Params.theme | default "dark" }}">
+{{- /* Hugo 0.158 renamed languageCode to locale and warns on the old name;
+   the version check keeps one template working from 0.146 onwards. */ -}}
+{{- $lang := site.Language.Lang | default "en" -}}
+{{- if ge hugo.Version "0.158.0" }}{{ $lang = site.Language.Locale | default $lang }}{{ else }}{{ $lang = site.Language.LanguageCode | default $lang }}{{ end }}
+<html lang="{{ $lang }}"data-theme="{{ site.Params.theme | default "dark" }}">
 <head>
   {{- partial "head.html" . }}
 </head>

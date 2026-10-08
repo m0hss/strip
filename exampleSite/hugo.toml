@@ -1,7 +1,6 @@
 # Example site for the Strip theme.
 # All projects and logs here are fictional samples from the design.
 baseURL = "https://example.org/"
-languageCode = "en"
 title = "Strip"
 
 [module]

@@ -3,7 +3,7 @@
 {{- $status := upper (.Params.status | default "PENDING") }}
 {{- $latest := partial "strip/latest-amendment.html" . }}
 <main class="wrap" id="main">
-  <a class="back" href="{{ "/" | relLangURL }}">{{ T "backToBoard" }}</a>
+  <a class="back" href="{{ site.Home.RelPermalink }}">{{ T "backToBoard" }}</a>
   <article>
     <header class="mega {{ $t.class }}">
       <dl class="mega-grid">

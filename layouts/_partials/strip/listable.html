@@ -1,0 +1,9 @@
+{{- /*
+  Returns the pages that a plain list (section, tag) may show: a page with a
+  callsign is drawn as a strip, so it needs a known status, as on the board.
+*/ -}}
+{{- $out := slice }}
+{{- range . }}
+  {{- if or (not .Params.callsign) (partial "strip/status.html" .) }}{{ $out = $out | append . }}{{ end }}
+{{- end }}
+{{- return $out }}

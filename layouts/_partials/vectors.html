@@ -3,7 +3,7 @@
   (bay first, then newest first within the bay).
 */ -}}
 {{- $order := slice }}
-{{- range partial "board/bays.html" (partial "board/strips.html" .) }}{{ range .strips }}{{ $order = $order | append . }}{{ end }}{{ end }}
+{{- range partial "board/bays.html" (partialCached "board/strips.html" . "strips") }}{{ range .strips }}{{ $order = $order | append . }}{{ end }}{{ end }}
 {{- $prev := false }}{{ $next := false }}{{ $found := false }}
 {{- range $order }}
   {{- if $found }}{{ if not $next }}{{ $next = . }}{{ end }}

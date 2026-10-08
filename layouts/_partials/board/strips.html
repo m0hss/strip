@@ -1,3 +1,17 @@
-{{- /* Returns every project page shown on the board. */ -}}
+{{- /*
+  Returns every project page shown as a strip: pages in params.boardSections
+  whose status names one of the four bays. A page with a missing or unknown
+  status is left off every strip list (board, radar, vectors, handover,
+  search) with a build warning. Call it with
+  partialCached "board/strips.html" . "strips" so the warning prints once.
+*/ -}}
 {{- $sections := site.Params.boardSections | default (slice "projects") }}
-{{- return where site.RegularPages "Section" "in" $sections }}
+{{- $strips := slice }}
+{{- range where site.RegularPages "Section" "in" $sections }}
+  {{- if partial "strip/status.html" . }}
+    {{- $strips = $strips | append . }}
+  {{- else }}
+    {{- warnf "strip: %q has status %q; use one of PENDING, ACTIVE, LANDED, DIVERTED" .File.Path .Params.status }}
+  {{- end }}
+{{- end }}
+{{- return $strips }}

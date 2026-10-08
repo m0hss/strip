@@ -19,7 +19,7 @@ The export holds four artboards:
 | Component sheet | the tokens, strip states, shortcodes, log page, search and 404 |
 | Operations Board (mobile, 390 wide) | the responsive behaviour of the board |
 
-The design governs changes: content model, visual system, microcopy and accessibility. Keep the design unchanged unless asked to revise it. Where Hugo forces a different mechanism than the design shows, say so in a code comment and the README.
+The design governs changes: content model, visual system, microcopy and accessibility. Keep the design unchanged unless asked to revise it. Where Hugo forces a different mechanism than the design shows, say so in a code comment.
 
 ## Hugo requirements and local use
 

@@ -6,8 +6,7 @@ license = "MIT"
 licenselink = "https://github.com/m0hss/strip/blob/master/LICENSE"
 description = "A project portfolio styled as an air-traffic-control flight progress board."
 homepage = "https://github.com/m0hss/strip"
-# TODO: set to the Netlify site URL once the repository is connected, before tagging a release.
-# demosite = "https://<site-name>.netlify.app/"
+demosite = "https://strip-hugo.netlify.app/"
 tags = ["portfolio", "projects", "dark", "light", "responsive", "accessible", "minimal", "search"]
 features = ["dark and light themes", "amendment log", "client-side search", "self-hosted fonts"]
 

@@ -108,6 +108,8 @@ The live demo is this example site, built by Netlify from `netlify.toml` at the 
 
 The search page is an ordinary content page with `layout: "search"` (see `exampleSite/content/search.md`).
 
+To use your own favicon, put `favicon.svg`, `favicon.ico` and `apple-touch-icon.png` in your site's `static/` folder; they replace the theme's.
+
 ## Content model
 
 ### Projects (strips)
